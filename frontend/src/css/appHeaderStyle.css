@@ -1,20 +1,63 @@
 .navbar {
-    padding: 1em;
+  padding: 1em;
+}
+
+.bg-primary {
+  background: linear-gradient(180deg, rgb(198, 234, 238) 5%, #007bff 80%) ; /* Màu gradient từ tím sang xanh */
+}
+
+.bg-light {
+  background: linear-gradient(180deg, white, #c7c6c6) ; /* Màu gradient từ trắng sang xám nhạt */
+}
+
+.nav-link {
+  color: inherit;
+}
+
+.nav-link:hover {
+  color: #f39c12;
+}
+
+.btn {
+  transition: all 0.3s ease;
+} 
+
+.btn-light-mode:hover {
+  background-color: white;
+  transform: scale(1.05);
+  color: rgba(32, 59, 232);
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .nav-link {
-    color: inherit; /* Kế thừa màu sắc từ navbar */
+  to {
+    transform: rotate(360deg);
   }
-  
-  .nav-link:hover {
-    color: #f39c12; /* Màu khi hover */
-  }
-  
-  .btn {
-    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
-  }
-  
-  .btn:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Tô sáng khi hover */
-    transform: scale(1.05); /* Tăng kích thước một chút khi hover */
-  }
+}
+
+.btn-light-mode:hover {
+  background-color: white;
+  transform: scale(1.05);
+  color: rgba(32, 59, 232);
+}
+
+.btn-light-mode:hover i {
+  animation: rotate 4s linear infinite; /* Xoay liên tục */
+}
+/* appHeaderStyle.css */
+.btn-light-mode {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+.btn-dark-mode {
+  background-color: #343a40;
+  color: #e2e2e2;
+}
+.btn-dark-mode:hover {
+  transform: scale(1.05);
+}
+.btn-dark-mode:hover i{
+  filter: drop-shadow(0 2px 6px white);
+}
