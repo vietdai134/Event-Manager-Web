@@ -1,0 +1,79 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import AboutView from '@/views/AboutView.vue'
+import EventCreatedView from '@/views/EventCreatedView.vue'
+import EventPublicView from '@/views/EventPublicView.vue'
+import EventRegisteredView from '@/views/EventRegisteredView.vue'
+import EventPastView from '@/views/EventPastView.vue'
+import DetailEvent from '@/views/EventDetailView.vue'
+import InfoUserView from '@/views/InfoUserView.vue'
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: HomeView
+  },
+  {
+    path: '/About',
+    name: 'About',
+    component:AboutView
+  },
+  {
+    path:'/Events-Public',
+    name:'EventsPublic',
+    component:EventPublicView
+  },
+  {
+    path: '/Events-Public/:id',
+    name: 'DetailEventPublic',
+    component: DetailEvent,
+    props: true, 
+  },
+  {
+    path:'/Events-Created',
+    name:'EventsCreated',
+    component:EventCreatedView
+  },
+  
+  {
+    path: '/Events-Created/:id',
+    name: 'DetailEventsCreated',
+    component: DetailEvent,
+    props: true, 
+  },
+  {
+    path:'/Events-Registered',
+    name:'EventsRegistered',
+    component:EventRegisteredView
+  },
+  {
+    path: '/Events-Registered/:id',
+    name: 'DetailEventRegistered',
+    component: DetailEvent,
+    props: true, 
+  },
+  {
+    path:'/Events-Past',
+    name:'EventsPast',
+    component:EventPastView
+  },
+  
+  {
+    path: '/Events-Past/:id',
+    name: 'DetailEventsPast',
+    component: DetailEvent,
+    props: true, 
+  },
+  {
+    path:'/Info-User',
+    name:'InfoUser',
+    component:InfoUserView
+  },
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router

@@ -1,0 +1,20 @@
+.navbar {
+    padding: 1em;
+  }
+  
+  .nav-link {
+    color: inherit; /* Kế thừa màu sắc từ navbar */
+  }
+  
+  .nav-link:hover {
+    color: #f39c12; /* Màu khi hover */
+  }
+  
+  .btn {
+    transition: all 0.3s ease; /* Hiệu ứng chuyển động mượt mà */
+  }
+  
+  .btn:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Tô sáng khi hover */
+    transform: scale(1.05); /* Tăng kích thước một chút khi hover */
+  }
