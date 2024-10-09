@@ -17,7 +17,7 @@
         </div>
         <!-- Phần bên phải chiếm 30% -->
         <div class="right_content">
-          <div class="event_details_box">
+          <div class="event_details_box_light">
             <p><strong>Địa điểm:</strong> {{ event.Location }}</p>
             <p><strong>Thời gian:</strong> {{ event.StartTime }} - {{ event.EndTime }} </p>
             <p>

@@ -5,6 +5,7 @@
     align-items: center;
     width: 100%;
     overflow-y: auto;
+    padding: 20px;
   }
   .container_event_detail {
     display: flex;
@@ -12,6 +13,7 @@
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+
   }
   
   .left_content {
@@ -21,6 +23,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    border-radius: 5px;
+    padding: 10px;
   }
   
   .left_content h2 {
@@ -64,7 +68,9 @@
     overflow: hidden;
   }
   
-  .event_details_box {
+  .event_details_box_light {
+    background-color: #f8f9fa;
+
     text-align: left;
     width: 80%;
     margin: 20px;

@@ -7,48 +7,92 @@
 
 .container_public_event {
   padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .list_container {
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 70%;
 }
 
 .row_container {
   width: 100%;
 }
 
-.event_date {
+.event_date_light {
   font-weight: normal;
-  font-size: 14;
   text-align: left;
+  font-size: x-large;
+  width: 100%;
+  border-bottom:2px solid rgba(114, 185, 243);
+  position: relative;
+  color: white;
+  padding-left: 15px;
 }
-
+.event_date_light::after{
+  padding: 10px;
+  position: absolute;
+  content: '';
+  width: 20%;
+  background-color: rgb(114, 185, 243);
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px 10px 0 0;
+  z-index: -1;
+}
+.event_date_dark {
+  font-weight: normal;
+  text-align: left;
+  font-size: x-large;
+  width: 100%;
+  border-bottom:2px solid #e2e2e2;
+  position: relative;
+  color: white;
+  padding-left: 15px;
+}
+.event_date_dark::after{
+  padding: 10px;
+  position: absolute;
+  content: '';
+  width: 20%;
+  background-color: #e2e2e2;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 10px 10px 0 0;
+  z-index: -1;
+}
 .event_row {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
 }
-
-.event_card {
+.light_card{
   background-color: #D9E8FF;
-  /* border: 3px solid rgba(32, 59, 232); */
+
+}
+.dark_card{
+  background-color: #e2e2e2;
+}
+.event_card {
   border-radius: 10px;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 10px;
   flex-basis: 435px;
-  height: 450px;
-  width: 400px;
+  height: 400px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   position: relative;
 }
-
 .event_image {
   object-fit: cover;
   width: 100%;
@@ -120,14 +164,19 @@ p::-webkit-scrollbar-track {
   bottom: -10px;
   color: white;
   border: 1px solid white;
-  background-color: rgba(32, 59, 232);
   padding: 10px 30px;
   border-radius: 5px;
   font-weight: bold;
   font-size: 20;
   transition: transform 0.4s;
 }
+.light_btn{
+  background-color: rgba(32, 59, 232);
+}
+.dark_btn{
+  background-color: black;
 
+}
 .register_btn:hover,
 .cancel_register_btn:hover {
   transform: scale(1.1);
@@ -152,4 +201,18 @@ p::-webkit-scrollbar-track {
     flex-basis: 100%;
     /* 1 card in a row */
   }
+}
+.light-mode-text {
+  color: #fff;
+}
+
+.dark-mode-text {
+  color: #000;
+}
+.light-text {
+  color: #007BFF;
+}
+
+.dark-text {
+  color: #fff;
 }

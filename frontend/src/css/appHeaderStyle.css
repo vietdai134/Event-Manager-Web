@@ -1,9 +1,23 @@
 .navbar {
-  padding: 1em;
+  padding: 0.5em;
+}
+.navbar-nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-item{
+  font-size: 20px;
 }
 
+.nav-item img{
+  margin-right: 50px;
+  border-radius: 50%;
+  width: 120px;
+  background-color: #e2e2e2;
+}
 .bg-primary {
-  background: linear-gradient(180deg, rgb(198, 234, 238) 5%, #007bff 80%) ; /* Màu gradient từ tím sang xanh */
+  background: linear-gradient(180deg, rgb(157, 228, 236) 5%, #005aba 80%) ; /* Màu gradient từ tím sang xanh */
 }
 
 .bg-light {
@@ -59,5 +73,17 @@
   transform: scale(1.05);
 }
 .btn-dark-mode:hover i{
-  filter: drop-shadow(0 2px 6px white);
+  /* filter: drop-shadow(0 2px 6px white); */
+  animation: flaskmoon 1s linear infinite;
+}
+@keyframes flaskmoon{
+  0% {
+    filter: drop-shadow(0 0px 0px white); /* Bóng ban đầu */
+  }
+  50% {
+    filter: drop-shadow(0 4px 12px white); /* Bóng lớn lên */
+  }
+  100% {
+    filter: drop-shadow(0 6px 18px white); /* Bóng lớn nhất, không mờ */
+  }
 }

@@ -1,21 +1,29 @@
-export default {
-    name: "appHeader",
-    data() {
-      return {
-        isLightMode: true, // mặc định là chế độ sáng
-      };
-    },
-    methods: {
-      toggleTheme() {
-        this.isLightMode = !this.isLightMode;
-        document.body.style.backgroundColor = this.isLightMode ? '#fff' : '#000';
-        const eventDates = document.querySelectorAll('.event_date');
+// appHeaderScript.js
+import { setLightMode, getLightMode } from "@/script/theme"; // Nhập hàm từ theme.js
 
-        eventDates.forEach(h2 => {
-          h2.style.color = this.isLightMode ? '#000' : 'white';
-        });
-    
-        // document.body.style.backgroundColor = this.isLightMode ? 'white' : 'black';
-      },
+export default {
+  name: "appHeader",
+  data() {
+    return {
+      isLightMode: getLightMode(), // Lấy giá trị isLightMode từ theme.js
+    };
+  },
+  methods: {
+    toggleTheme() {
+      this.isLightMode = !this.isLightMode; // Đảo giá trị
+      setLightMode(this.isLightMode); // Gán giá trị mới vào theme.js
+      console.log("new islight: " + getLightMode());
+
+      // Cập nhật màu nền
+      document.body.style.backgroundColor = this.isLightMode ? '#fff' : '#000';
+
+      // Phát ra sự kiện để các component khác có thể nghe
+      const event = new Event("lightModeChanged");
+      window.dispatchEvent(event);
     },
-  };
+  },
+  mounted() {
+    // Cập nhật màu nền khi trang được tải lại
+    document.body.style.backgroundColor = this.isLightMode ? '#fff' : '#000';
+  },
+};
