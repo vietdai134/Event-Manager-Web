@@ -4,7 +4,7 @@
       Sự Kiện Công Khai
     </h1>
     <div class="list_container" v-for="group in groupedEvents" :key="group.date">
-      <h2 :class="isLightMode ? 'event_date_light light-mode-text' : 'event_date_dark dark-mode-text'" >
+      <h2 :class="isLightMode ? 'event_date_light light-mode-text' : 'event_date_dark dark-mode-text'">
        {{ formatDate(group.date) }}
       </h2>
       <div class="row_container">
@@ -50,37 +50,19 @@
 <script>
 import eventPublicScript from "@/script/eventPublicScript";
 import btnRegister from "@/components/btnRegister.vue";
-import { getLightMode } from "@/script/theme";
+import getIsLightMode from "@/script/getIsLightMode";
 
 export default {
   components: {
     btnRegister,
   },
-  data() {
-    return {
-      // Khai báo biến isLightMode
-      isLightMode: getLightMode(), // Lấy giá trị ban đầu từ theme.js
-    };
-  },
+  mixins: [eventPublicScript, getIsLightMode], // Sử dụng mixin
   methods: {
-    updateLightMode() {
-      this.isLightMode = getLightMode(); // Cập nhật giá trị isLightMode từ theme.js
-      // console.log("Giá trị isLightMode trong public.vue: ", this.isLightMode);
-    },
-    formatDate(dateString) {
-      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-      const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', options).replace(/\//g, '/'); // Định dạng ngày theo kiểu DD/MM/YYYY
+    someMethod() {
+      console.log(this.isLightMode); // Truy cập biến isLightMode
+      this.updateLightMode(); // Cập nhật isLightMode nếu cần
     },
   },
-  mounted() {
-    this.updateLightMode();
-    window.addEventListener("lightModeChanged", this.updateLightMode);
-  },
-  beforeUnmount() {
-    window.removeEventListener("lightModeChanged", this.updateLightMode);
-  },
-  mixins: [eventPublicScript],
 };
 </script>
 

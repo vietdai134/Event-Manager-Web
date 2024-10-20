@@ -1,11 +1,19 @@
 <template>
   <div class="container_public_event">
+    <h1
+      style="text-align: center; font-size: 2.5em; margin: 20px 0"
+      :class="isLightMode ? 'light-text' : 'dark-text'"
+    >
+      Sự Kiện Đã Tạo
+    </h1>
     <div
       class="list_container"
       v-for="group in groupedEvents"
       :key="group.date"
     >
-      <h2 class="event_date">{{ group.date }}</h2>
+      <h2 :class="isLightMode ? 'event_date_light light-mode-text' : 'event_date_dark dark-mode-text'" >
+       {{ formatDate(group.date) }}
+      </h2>
       <div class="row_container">
         <div class="event_row">
           <router-link
@@ -15,7 +23,7 @@
             class="event_card_link"
             exact
           >
-            <div class="event_card">
+            <div :class="isLightMode ? 'event_card light_card' : 'event_card dark_card'">
               <img
                 :src="getEventImage(event.EventImages)"
                 alt="Event image"
@@ -53,8 +61,17 @@
 
 <script>
 import eventCreateScript from '@/script/eventCreateScript';
+import getIsLightMode from "@/script/getIsLightMode";
+
 export default {
-  mixins: [eventCreateScript],
+  methods: {
+    someMethod() {
+      console.log(this.isLightMode);
+      this.updateLightMode(); 
+    },
+    
+  },
+  mixins: [eventCreateScript,getIsLightMode],
 };
 </script>
 
