@@ -88,7 +88,7 @@
   margin: 10px;
   flex-basis: 435px;
   height: 400px;
-  width: 350px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -154,17 +154,18 @@ p::-webkit-scrollbar-track {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  font-size: 15px;
   /* opacity: 0.5; */
 }
 
 .register_btn,
 .cancel_register_btn {
   position: absolute;
-  right: 0;
+  right: -10px;
   bottom: -10px;
   color: white;
   border: 1px solid white;
-  padding: 10px 30px;
+  padding: 10px 25px;
   border-radius: 5px;
   font-weight: bold;
   font-size: 20;
@@ -175,7 +176,6 @@ p::-webkit-scrollbar-track {
 }
 .dark_btn{
   background-color: black;
-
 }
 .register_btn:hover,
 .cancel_register_btn:hover {
