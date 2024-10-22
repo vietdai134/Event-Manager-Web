@@ -2,8 +2,8 @@
 
 from models.event_model import *
 
-def get_event_created_controller():
-    return get_all_event_created()
+def get_event_created_controller(gmail):
+    return get_all_event_created(gmail)
 
 def get_all_event_public_controller():
     return get_all_event_Public()

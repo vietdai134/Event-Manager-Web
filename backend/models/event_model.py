@@ -2,7 +2,7 @@
 
 from config import get_db_connection
 
-def get_all_event_created():
+def get_all_event_created(gmail):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -10,7 +10,7 @@ def get_all_event_created():
         """SELECT * 
         FROM eventsdetail 
         JOIN eventcreators ON eventcreators.EventID = eventsdetail.ID 
-        WHERE eventcreators.gmail = 'alice@example.com'""")
+        WHERE eventcreators.gmail = %s""",(gmail,))
     events = cursor.fetchall()
     cursor.close()
     conn.close()

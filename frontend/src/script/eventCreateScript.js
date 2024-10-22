@@ -9,7 +9,8 @@ export default {
   },
   mounted() {
     // Gọi API từ backend để lấy dữ liệu
-    getEvenCreateByGmail()
+    
+    getEvenCreateByGmail("alice@example.com")
     .then(response => {
       this.created_events = response.data; // Assign data to created_events
       console.log(this.created_events)

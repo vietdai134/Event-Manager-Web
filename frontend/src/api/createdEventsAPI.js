@@ -9,6 +9,6 @@ const apiClient = axios.create({
 });
 
 // Named export
-export function getEvenCreateByGmail() {
-    return apiClient.get(`/created-event`);
+export function getEvenCreateByGmail(gmail) {
+    return apiClient.get(`/created-event/${gmail}`);
 }
