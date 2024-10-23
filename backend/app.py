@@ -9,9 +9,9 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/api/created-event', methods=['GET'])
-def get_event_created():
-    return get_event_created_view()
+@app.route('/api/created-event/<string:gmail>', methods=['GET'])
+def get_event_created(gmail):
+    return get_event_created_view(gmail)
     
 
 @app.route('/api/public-event', methods=['GET'])

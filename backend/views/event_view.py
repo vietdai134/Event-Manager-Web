@@ -3,8 +3,8 @@
 from flask import jsonify
 from controllers.event_controller import *
 
-def get_event_created_view():
-    events = get_event_created_controller()
+def get_event_created_view(gmail):
+    events = get_event_created_controller(gmail)
     return jsonify(events)
 
 def get_all_event_public_view():
