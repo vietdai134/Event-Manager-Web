@@ -7,6 +7,7 @@ import EventRegisteredView from '@/views/EventRegisteredView.vue'
 import EventPastView from '@/views/EventPastView.vue'
 import DetailEvent from '@/views/EventDetailView.vue'
 import InfoUserView from '@/views/InfoUserView.vue'
+import Login from '@/views/Login.vue'
 const routes = [
   {
     path: '/',
@@ -69,6 +70,11 @@ const routes = [
     name:'InfoUser',
     component:InfoUserView
   },
+  {
+    path:'/Login',
+    name:'Login',
+    component:Login
+  }
 ]
 
 const router = createRouter({

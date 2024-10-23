@@ -1,52 +1,133 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg" :class="{'bg-primary text-white': isLightMode, 'bg-light text-dark': !isLightMode}">
+    <nav
+      class="navbar navbar-expand-lg"
+      :class="{
+        'bg-primary text-white': isLightMode,
+        'bg-light text-dark': !isLightMode,
+      }"
+    >
       <div class="container-fluid">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <img src="../assets/img/logo2.png" alt="Logo Event">
+            <img src="../assets/img/logo2.png" alt="Logo Event" />
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'Home' }">Home </router-link>
+            <router-link class="nav-link" :to="{ name: 'Home' }">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'About' }">About </router-link>
+            <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'EventsPublic' }">Sự kiện công khai </router-link>
+          <!-- menu sự kiện -->
+          <li
+            class="nav-item"
+            @mouseover="showList = true"
+            @mouseleave="showList = false"
+          >
+            <span style="cursor: pointer">Sự Kiện</span>
+            <ul class="menu_events" :class="{ show: showList }">
+              <li>
+                <i
+                  class="fa-solid fa-arrow-right"
+                  :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
+                ></i>
+                <router-link class="menu_item" :to="{ name: 'EventsPublic' }">Sự kiện công khai</router-link>
+              </li>
+              <li>
+                <i
+                  class="fa-solid fa-arrow-right"
+                  :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
+                ></i>
+                <router-link class="menu_item" :to="{ name: 'EventsRegistered' }">Sự kiện đã đăng ký</router-link>
+              </li>
+              <li>
+                <i
+                  class="fa-solid fa-arrow-right"
+                  :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
+                ></i>
+                <router-link class="menu_item" :to="{ name: 'EventsPast' }">Sự kiện đã tham gia</router-link>
+              </li>
+              <li>
+                <i
+                  class="fa-solid fa-arrow-right"
+                  :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
+                ></i>
+                <router-link class="menu_item" :to="{ name: 'EventsCreated' }">Sự kiện đã tạo</router-link>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'EventsRegistered' }">Sự kiện đã đăng ký </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'EventsPast' }">Sự kiện đã tham gia </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'EventsCreated' }">Sự kiện đã tạo </router-link>
-          </li>
-          
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'InfoUser' }">Thông tin người dùng</router-link>
           </li>
         </ul>
-        <button @click="toggleTheme" :class="isLightMode ? 'btn btn-outline-light btn-light-mode' : 'btn btn-outline-dark btn-dark-mode'" type="button" style="position: relative; display: flex; align-items: center;">
-          <i :class="isLightMode ? 'fas fa-sun' : 'fas fa-moon'" style="font-size: 1.5em;"></i>
-          <span class="ms-2">{{isLightMode ? 'Light':'Dark'}}</span>
+        <button
+          id="login"
+          :class="isLightMode ? 'btn-light-mode' : 'btn-dark-mode'"
+          @click="goToLogin"
+        >
+          <span>Login</span>
+          <i
+            class="fa-solid fa-right-to-bracket"
+            :style="{ color: isLightMode ? '#74C0FC' : 'white' }"
+          ></i>
         </button>
+        <button
+          @click="toggleTheme"
+          :class="isLightMode ? 'btn btn-light-mode' : 'btn btn-dark-mode'"
+          type="button"
+          style="position: relative; display: flex; align-items: center"
+        >
+          <i
+            :class="isLightMode ? 'fas fa-sun' : 'fas fa-moon'"
+            style="font-size: 1.5em"
+          ></i>
+          <span class="ms-2">{{ isLightMode ? "Light" : "Dark" }}</span>
+        </button>
+      </div>
+      <div v-if="user_name" :class="isLightMode ? 'name_login light' : 'name_login dark'">
+        <i class="fa-solid fa-user"></i>
+        <span>{{ user_name }}</span> 
       </div>
     </nav>
   </div>
 </template>
 
 <script>
-import appHeaderScript from '@/script/appHeaderScript';
+import appHeaderScript from "@/script/appHeaderScript";
+import Cookies from 'js-cookie'; // Nhập js-cookie
 
 export default {
+  props: ['user'],
   mixins: [appHeaderScript],
-  
+  data() {
+    return {
+      showList: false,
+      user_name: null, 
+    };
+  },
+  created() {
+    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạo
+  },
+  methods: {
+    goToLogin() {
+      this.$router.push({ name: "Login" });
+      this.$emit('login'); // Gửi sự kiện 'login' lên App.vue
+    },
+    updateUserName() {
+      const fullNameFromCookie = Cookies.get("fullname");
+      this.user_name = fullNameFromCookie ? fullNameFromCookie : null; // Cập nhật user_name từ cookie
+    },
+  },
+  watch: {
+    // Lắng nghe thay đổi của props.user
+    user(newVal) {
+      if (newVal) {
+        this.updateUserName(); // Cập nhật tên người dùng từ cookie
+      }
+    }
+  },
 };
 </script>
 
 <style scoped src="../css/appHeaderStyle.css">
-
 </style>

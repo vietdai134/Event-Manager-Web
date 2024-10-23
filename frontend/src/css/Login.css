@@ -1,0 +1,89 @@
+.main_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 100px);
+  margin: 70px 0;
+}
+
+.container_login_signin {
+  width: 1000px;
+  height: 600px;
+  padding: 20px;
+  background-color: #f4f4f4 ;
+  border-radius: 8px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.element_hidden{
+  width: 50%;
+  min-width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+.element_hidden img{
+  width: 100%;
+  height: auto; 
+  object-fit: cover;
+}
+.login_content {
+  width: 45%;
+  height: 100%;
+}
+
+.register_content {
+  width: 45%;
+  height: 100%;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="text"]:focus {
+  border-color: #74C0FC;
+  outline: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #74C0FC;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #007BFF;
+}

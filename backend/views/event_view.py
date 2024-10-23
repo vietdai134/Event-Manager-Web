@@ -22,3 +22,16 @@ def get_event_registered_view():
 def get_event_past_view():
     events = get_event_past_controller()
     return jsonify(events)
+
+def get_users_view():
+    users = get_users_controller() 
+    return jsonify(users)
+
+def get_users_view_gmail(gmail):
+    users = get_users_gmail_controller(gmail) 
+    if users:  # Kiểm tra nếu có người dùng
+        return users
+    return None
+def add_userinfo_view(name, email, phone, password, createat, updateat):
+    user = add_userinfo_controller(name, email, phone, password, createat, updateat)
+    return user

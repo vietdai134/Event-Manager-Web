@@ -1,27 +1,33 @@
 .navbar {
   padding: 0.5em;
+  position: relative;
 }
-.navbar-nav{
+
+.navbar-nav {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.nav-item{
+
+.nav-item {
   font-size: 20px;
 }
 
-.nav-item img{
+.nav-item img {
   margin-right: 50px;
   border-radius: 50%;
   width: 120px;
   background-color: #e2e2e2;
 }
+
 .bg-primary {
-  background: linear-gradient(180deg, rgb(157, 228, 236) 5%, #005aba 80%) ; /* Màu gradient từ tím sang xanh */
+  background: linear-gradient(180deg, rgb(157, 228, 236) 5%, #005aba 80%);
+  /* Màu gradient từ tím sang xanh */
 }
 
 .bg-light {
-  background: linear-gradient(180deg, white, #c7c6c6) ; /* Màu gradient từ trắng sang xám nhạt */
+  background: linear-gradient(180deg, white, #c7c6c6);
+  /* Màu gradient từ trắng sang xám nhạt */
 }
 
 .nav-link {
@@ -34,17 +40,19 @@
 
 .btn {
   transition: all 0.3s ease;
-} 
+}
 
 .btn-light-mode:hover {
   background-color: white;
   transform: scale(1.05);
   color: rgba(32, 59, 232);
 }
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -57,33 +65,186 @@
 }
 
 .btn-light-mode:hover i {
-  animation: rotate 4s linear infinite; /* Xoay liên tục */
+  animation: rotate 4s linear infinite;
+  /* Xoay liên tục */
 }
+
 /* appHeaderStyle.css */
 .btn-light-mode {
   background-color: #f8f9fa;
   color: #000;
+  box-shadow: 0 0 2px 2px rgb(206, 206, 206);
+
 }
 
 .btn-dark-mode {
   background-color: #343a40;
   color: #e2e2e2;
 }
+
 .btn-dark-mode:hover {
+  background-color: black;
+  color: white;
   transform: scale(1.05);
 }
-.btn-dark-mode:hover i{
+
+.btn-dark-mode:hover i {
   /* filter: drop-shadow(0 2px 6px white); */
   animation: flaskmoon 1s linear infinite;
 }
-@keyframes flaskmoon{
+
+@keyframes flaskmoon {
   0% {
-    filter: drop-shadow(0 0px 0px white); /* Bóng ban đầu */
+    filter: drop-shadow(0 0px 0px white);
+    /* Bóng ban đầu */
   }
+
   50% {
-    filter: drop-shadow(0 4px 12px white); /* Bóng lớn lên */
+    filter: drop-shadow(0 4px 12px white);
+    /* Bóng lớn lên */
   }
+
   100% {
-    filter: drop-shadow(0 6px 18px white); /* Bóng lớn nhất, không mờ */
+    filter: drop-shadow(0 6px 18px white);
+    /* Bóng lớn nhất, không mờ */
   }
+}
+
+@keyframes login_icon {
+  0% {
+    right: 20px;
+  }
+
+  100% {
+    right: 5px;
+  }
+}
+
+#login {
+  border: none;
+  /* background-color: white; */
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px rgb(206, 206, 206);
+  margin: 0 10px;
+  padding: 6px 13px;
+  position: relative;
+  width: 100px;
+}
+
+#login i {
+  position: absolute;
+  margin-left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  right: 25px;
+}
+
+#login span {
+  font-size: medium;
+  float: left;
+}
+
+#login:hover i {
+  animation: 2s login_icon infinite;
+}
+
+.name_login {
+  width: 250px;
+  height: 50px;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.light {
+  background-color: rgba(32, 59, 232);
+}
+
+.dark {
+  background-color: white;
+}
+
+.name_login span {
+  margin-left: 40px;
+  font-family: "Times New Roman";
+}
+
+.name_login.light::after {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  top: -18px;
+  right: 222px;
+  background-color: rgba(32, 59, 232);
+  transform: rotate(45deg);
+  z-index: -10;
+}
+
+.name_login.dark::after {
+  content: '';
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  top: -18px;
+  right: 222px;
+  background-color: white;
+  transform: rotate(45deg);
+  z-index: -10;
+}
+
+.menu_events {
+  z-index: 1;
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  padding: 15px 30px;
+  overflow: hidden;
+  width: 250px;
+}
+
+.menu_events.show {
+  display: block;
+}
+
+.menu_item {
+  text-decoration: none;
+  color: black;
+
+}
+
+.menu_item:hover {
+  color: rgba(32, 59, 232);
+}
+
+.menu_events li {
+  position: relative;
+}
+
+.menu_events li i {
+  /* display: none; */
+  position: absolute;
+  left: -50px;
+  transform: translateY(40%);
+  transition: left 0.5s ease;
+}
+
+.menu_events li:hover i {
+  display: flex;
+  left: -20px;
+}
+
+.menu_events li:hover .menu_item {
+  margin-left: 4px;
 }

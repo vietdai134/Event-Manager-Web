@@ -14,6 +14,14 @@ def get_event_public_controller(event_id):
 def get_event_registered_controller():
     return get_all_event_registered()
 
-
 def get_event_past_controller():
     return get_all_event_past()
+
+def get_users_controller():
+    return get_users()
+
+def get_users_gmail_controller(gmail):
+    return get_users_gmail_model(gmail)
+
+def add_userinfo_controller(name, email, phone, password, createat, updateat):
+    return add_userinfo_model(name, email, phone, password, createat, updateat)
