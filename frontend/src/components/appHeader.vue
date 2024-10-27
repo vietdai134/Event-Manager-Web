@@ -59,6 +59,9 @@
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'InfoUser' }">Thông tin người dùng</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'createEvent' }">Thêm Sự Kiện</router-link>
+          </li>
         </ul>
         <button
           id="login"

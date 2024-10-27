@@ -7,6 +7,8 @@ import EventRegisteredView from '@/views/EventRegisteredView.vue'
 import EventPastView from '@/views/EventPastView.vue'
 import DetailEvent from '@/views/EventDetailView.vue'
 import InfoUserView from '@/views/InfoUserView.vue'
+import createEvent from '@/views/createEvent.vue'
+
 import Login from '@/views/Login.vue'
 const routes = [
   {
@@ -74,6 +76,11 @@ const routes = [
     path:'/Login',
     name:'Login',
     component:Login
+  },
+  {
+    path:'/Create_Event',
+    name:'createEvent',
+    component:createEvent
   }
 ]
 

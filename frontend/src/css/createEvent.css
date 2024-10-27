@@ -1,0 +1,242 @@
+.container_create {
+    width: 100%;
+    height: auto;
+    /* background-color: white; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_bottom {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 15px 3px rgb(231, 231, 231);
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+#form_create {
+    /* background-color: aqua; */
+    width: 50%;
+    height: auto;
+    box-shadow: 0 0 15px 3px rgb(231, 231, 231);
+    padding: 20px;
+}
+
+#form_create h1 {
+    display: flex;
+    justify-content: center;
+}
+
+#form_create .load_img {
+    margin-bottom: 20px;
+    width: 100%;
+    height: auto;
+    /* max-height: 300px; */
+    /* background-color: azure; */
+    display: flex;
+}
+
+#form_create .load_img img {
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 15px 3px rgb(231, 231, 231);
+    margin-right: 10px;
+}
+
+#form_create .load_img .input_top {
+    box-shadow: 0 0 15px 3px rgb(231, 231, 231);
+    width: 50%;
+    /* max-width: 500px; */
+    padding: 20px 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form_group {
+    display: block;
+}
+
+.form_group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form_group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form_group textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    min-height: 120px;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
+    width: 100%;
+}
+
+.custom-file-label {
+    padding: 8px 16px;
+    background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+#create_btn{
+    float: right;
+    margin: 20px 10px;
+    padding: 15px 25px;
+    background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+.custom-file-label:hover,#create_btn:hover {
+    box-shadow: 0 0 15px 2px rgba(32, 59, 232);
+    background: linear-gradient(180deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+}
+
+
+
+.custom-file-input {
+    display: none;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* max-width: 150px;  */
+}
+
+.form_group_checkbox {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+.form_group_checkbox label {
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+.form_group_checkbox input {
+    width: 20px;
+    /* Thay đổi kích thước width */
+    height: 20px;
+}
+
+.datetime,
+.quantyti {
+    width: 100%;
+    display: flex;
+}
+
+.date,
+.time,
+.maxPart,
+.duration {
+    display: block;
+    width: 45%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.date,
+.duration {
+    margin-right: 10%;
+}
+
+.date label,
+.time label,
+.maxPart label,
+.duration label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.date input,
+.time input,
+.maxPart input,
+.duration input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form_group {
+    margin-bottom: 20px;
+}
+
+.form_group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form_group select,
+.form_group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form_group select:focus,
+.form_group input:focus,
+.form_group textarea:focus {
+    border-color: rgba(32, 59, 232);
+    outline: none;
+}
+
+.form_group select option,
+.form_group input::placeholder {
+    color: #888;
+}
