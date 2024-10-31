@@ -1,18 +1,29 @@
 <template>
-  <div class="container_public_event">
+  <div class="container_event_created">
     <h1
       style="text-align: center; font-size: 2.5em; margin: 20px 0"
       :class="isLightMode ? 'light-text' : 'dark-text'"
     >
       Sự Kiện Đã Tạo
     </h1>
+
+    <!-- Search Input -->
+    <div class="search-container">
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="Tìm kiếm sự kiện theo tên"
+        class="search-input"
+      />
+    </div>
+      <br>
     <div
       class="list_container"
-      v-for="group in groupedEvents"
+      v-for="group in filteredGroupedEvents"
       :key="group.date"
     >
-      <h2 :class="isLightMode ? 'event_date_light light-mode-text' : 'event_date_dark dark-mode-text'" >
-       {{ formatDate(group.date) }}
+      <h2 :class="isLightMode ? 'event_date_light' : 'event_date_dark'">
+        {{ formatDate(group.date) }}
       </h2>
       <div class="row_container">
         <div class="event_row">
@@ -36,9 +47,7 @@
                   class="per_sl_now"
                   :style="{
                     width: calculateRegisteredPercentage(event) + '%',
-                    backgroundColor: getColorForPercentage(
-                      calculateRegisteredPercentage(event)
-                    ),
+                    backgroundColor: getColorForPercentage(calculateRegisteredPercentage(event))
                   }"
                 ></div>
               </div>
@@ -46,20 +55,20 @@
                 <div class="total_per">
                   {{ event.RegisteredCount }} / {{ event.MaxAttendees }} người đã đăng ký
                 </div>
-                 <!-- <button class="btn_dk" @click.prevent="registerEvent(event.ID)">Đăng Ký</button> -->
               </div>
             </div>
-            
           </router-link>
         </div>
       </div>
     </div>
+    <div v-if="!filteredGroupedEvents.length && searchQuery">
+      <p>Không có sự kiện nào phù hợp với tìm kiếm của bạn.</p>
+    </div>
   </div>
 </template>
 
-
 <script>
-import eventCreateScript from '@/script/eventCreateScript';
+import eventCreateScript from "@/script/eventCreateScript";
 import getIsLightMode from "@/script/getIsLightMode";
 
 export default {
@@ -70,7 +79,24 @@ export default {
     },
     
   },
-  mixins: [eventCreateScript,getIsLightMode],
+  mixins: [eventCreateScript, getIsLightMode],
+  data() {
+    return {
+      searchQuery: "", // Search query for filtering events
+    };
+  },
+  computed: {
+    filteredGroupedEvents() {
+      return this.groupedEvents
+        .map(group => ({
+          date: group.date,
+          events: group.events.filter(event =>
+            event.EventName.toLowerCase().includes(this.searchQuery.toLowerCase())
+          ),
+        }))
+        .filter(group => group.events.length > 0);
+    },
+  },
 };
 </script>
 

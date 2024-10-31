@@ -3,7 +3,18 @@
     <h1 style="text-align: center; font-size: 2.5em; margin: 20px 0;" :class="isLightMode ? 'light-text' : 'dark-text'">
       Sự Kiện Công Khai
     </h1>
-    <div class="list_container" v-for="group in groupedEvents" :key="group.date">
+    
+    <!-- Input tìm kiếm -->
+    <div class="search-container">
+      <input
+        type="text"
+        v-model="searchQuery"
+        placeholder="Tìm kiếm sự kiện theo tên"
+        class="search-input"
+      />
+    </div>
+
+    <div class="list_container" v-for="group in filteredGroupedEvents" :key="group.date">
       <h2 :class="isLightMode ? 'event_date_light light-mode-text' : 'event_date_dark dark-mode-text'">
        {{ formatDate(group.date) }}
       </h2>
@@ -44,6 +55,10 @@
         </div>
       </div>
     </div>
+    
+    <div v-if="!filteredGroupedEvents.length && searchQuery">
+      <p>Không có sự kiện nào phù hợp với tìm kiếm của bạn.</p>
+    </div>
   </div>
 </template>
 
@@ -56,11 +71,27 @@ export default {
   components: {
     btnRegister,
   },
-  mixins: [eventPublicScript, getIsLightMode], // Sử dụng mixin
   methods: {
     someMethod() {
       console.log(this.isLightMode); // Truy cập biến isLightMode
       this.updateLightMode(); // Cập nhật isLightMode nếu cần
+    },
+  },
+  mixins: [eventPublicScript, getIsLightMode],
+  data() {
+    return {
+      searchQuery: "", // Biến để lưu trữ truy vấn tìm kiếm
+    };
+  },
+  computed: {
+    filteredGroupedEvents() {
+      // Lọc các sự kiện theo tên
+      return this.groupedEvents.map(group => ({
+        date: group.date,
+        events: group.events.filter(event =>
+          event.EventName.toLowerCase().includes(this.searchQuery.toLowerCase())
+        )
+      })).filter(group => group.events.length > 0);
     },
   },
 };
