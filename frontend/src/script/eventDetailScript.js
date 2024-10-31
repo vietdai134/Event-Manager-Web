@@ -4,6 +4,8 @@ import DeleteButton from '@/components/btnDelete.vue'
 import EditButton from '@/components/btnEdit.vue';
 import ListUserButton from '@/components/btnListUser.vue'
 import btnCancelRegis from '@/components/btnCancelRegis.vue';
+import InviteDialog from '@/components/InviteDialog.vue';
+import dialogAddGmail from '@/components/dialogAddGmail.vue';
 
 export default {
   components: {  // Sửa từ `component` thành `components`
@@ -11,11 +13,14 @@ export default {
     DeleteButton,
     EditButton,
     ListUserButton,
-    btnCancelRegis
+    btnCancelRegis,
+    InviteDialog,
+    dialogAddGmail
   },
   data() {
     return {
       event: null,
+      showInviteDialog: false,
     };
   },
   created() {
@@ -24,6 +29,12 @@ export default {
     this.fetchEvent(eventId);
   },
   methods: {
+    openInviteDialog() {
+      this.showInviteDialog = true;
+    },
+    closeInviteDialog() {
+      this.showInviteDialog = false;
+    },
     // Hàm gọi API để lấy thông tin sự kiện
     async fetchEvent(eventId) {
       try {
@@ -57,6 +68,7 @@ export default {
         buttons.push('EditButton');
         buttons.push('ListUserButton');
         buttons.push('DeleteButton');
+        buttons.push('InviteDialog')
       }
       if (window.location.href.includes('Events-Registered')) {
         buttons.push('btnCancelRegis');
