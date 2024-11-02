@@ -1,16 +1,20 @@
 import { getEvenCreateByGmail } from '@/api/createdEventsAPI'; // Use named import
-
+import Cookies from "js-cookie";
 
 export default {
+  
   data() {
     return {
-      created_events: []
+      created_events: [],
+      gmail:""
     };
   },
+  created(){
+    this.gmail=Cookies.get('email');
+    // console.log(this.gmail);
+  },
   mounted() {
-    // Gọi API từ backend để lấy dữ liệu
-    
-    getEvenCreateByGmail("alice@example.com")
+    getEvenCreateByGmail(this.gmail)
     .then(response => {
       this.created_events = response.data; // Assign data to created_events
       console.log(this.created_events)

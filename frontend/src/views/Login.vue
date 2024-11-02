@@ -162,7 +162,7 @@ export default {
       if (!this.errorMessage) {
         const user = this.users.find((user) => user.Gmail === this.gmail);
         if (user) {
-          if (user.password === this.password) {
+          if (user.Password === this.password) {
             this.errorMessage = "thành công";
             Cookies.set("email", user.Gmail, { expires: 15 / (24 * 60) });
             Cookies.set("fullname", user.FullName, { expires: 15 / (24 * 60) });

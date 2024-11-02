@@ -27,13 +27,13 @@ def get_event_public(event_id):
         return jsonify({"error": "Event not found"}), 404
 
 
-@app.route('/api/registered-event', methods=['GET'])
-def get_event_registered():
-    return get_event_registered_view()
+@app.route('/api/registered-event/<string:gmail>', methods=['GET'])
+def get_event_registered(gmail):
+    return get_event_registered_view(gmail)
 
-@app.route('/api/past-event', methods=['GET'])
-def get_event_past():
-    return get_event_past_view()
+@app.route('/api/past-event/<string:gmail>', methods=['GET'])
+def get_event_past(gmail):
+    return get_event_past_view(gmail)
 
 @app.route('/api/Login', methods=['GET'])  
 def get_users():
@@ -61,6 +61,21 @@ def add_user():
 
     result = add_userinfo_view(name, email, phone, password, createat, updateat)
     
+    return jsonify({'message': result}), 201
+
+@app.route('/api/register_event', methods=['POST'])
+def event_register():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    gmail = data.get('Gmail')
+    event_id = data.get('event_id')
+    
+    # Kiểm tra nếu thiếu dữ liệu đầu vào
+    if not gmail or not event_id:
+        return jsonify({'message': 'Gmail and EventID are required fields'}), 400
+
+    result = register_event_view(event_id, gmail)
     return jsonify({'message': result}), 201
 
 if __name__ == '__main__':

@@ -55,20 +55,21 @@ def add_userinfo_model(name, email, phone, password, createat, updateat):
     conn.close()
     return "User added successfully"
 
-def get_all_event_registered():
+def get_all_event_registered(gmail):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
         """SELECT * 
         FROM eventsdetail 
         JOIN eventregistrations ON eventregistrations.EventID = eventsdetail.ID 
-        WHERE eventregistrations.gmail = 'alice@example.com'""")
+        WHERE eventregistrations.gmail = %s""",(gmail,))
+    
     events = cursor.fetchall()
     cursor.close()
     conn.close()
     return events
 
-def get_all_event_past():
+def get_all_event_past(gmail):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute(
@@ -76,9 +77,9 @@ def get_all_event_past():
             FROM eventsdetail
             LEFT JOIN eventcreators ON eventcreators.EventID = eventsdetail.ID
             LEFT JOIN eventregistrations ON eventregistrations.EventID = eventsdetail.ID
-            WHERE eventcreators.gmail = "alice@example.com" 
-            OR eventregistrations.gmail = 'alice@example.com';
-            """)
+            WHERE eventcreators.gmail = %s  
+            OR eventregistrations.gmail = %s
+            """,(gmail,gmail,))
     events = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -102,3 +103,22 @@ def get_event_Public(event_id):
     cursor.close()
     conn.close()
     return events
+
+def register_event(event_id, gmail):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        INSERT INTO eventregistrations (Gmail, EventID)
+        VALUES (%s, %s)
+        """
+        cursor.execute(query, (gmail, event_id))  
+        conn.commit() 
+        return "event registered successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to registered event: {e}"
+    finally:
+        cursor.close()
+        conn.close()  

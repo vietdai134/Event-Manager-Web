@@ -1,14 +1,19 @@
 import {getEventRegisteredByGmail} from '@/api/registeredEventsAPI'
-
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
-      register_events: []
+      register_events: [],
+      gmail:""
     };
+  },
+  created(){
+    this.gmail=Cookies.get('email');
+    // console.log(this.gmail);
   },
   mounted() {
     // Gọi API từ backend để lấy dữ liệu
-    getEventRegisteredByGmail()
+    getEventRegisteredByGmail(this.gmail)
     .then(response => {
       this.register_events = response.data; // Assign data to register_events
       console.log(this.register_events)

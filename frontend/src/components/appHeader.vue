@@ -97,7 +97,7 @@
 
 <script>
 import appHeaderScript from "@/script/appHeaderScript";
-import Cookies from 'js-cookie'; // Nhập js-cookie
+import Cookies from 'js-cookie'; 
 
 export default {
   props: ['user'],
