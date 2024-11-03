@@ -6,6 +6,6 @@ def get_db_connection():
     return mysql.connector.connect(
         host='localhost',
         user='root',
-        password='12345',  
+        password='Buithanhtai9#',  
         database='eventmanage'
     )
