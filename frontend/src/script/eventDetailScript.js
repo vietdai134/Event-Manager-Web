@@ -74,7 +74,7 @@ export default {
         buttons.push('btnCancelRegis');
       }
       if (window.location.href.includes('Events-Past')) {
-        buttons.push('EditButton');
+        // buttons.push('EditButton');
       }
       return buttons; // Trả về mảng chứa các button
     }

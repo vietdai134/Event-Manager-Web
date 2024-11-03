@@ -15,12 +15,12 @@ def get_event_public_view(event_id):
     events = get_event_public_controller(event_id)
     return events
 
-def get_event_registered_view():
-    events = get_event_registered_controller()
+def get_event_registered_view(gmail):
+    events = get_event_registered_controller(gmail)
     return jsonify(events)
 
-def get_event_past_view():
-    events = get_event_past_controller()
+def get_event_past_view(gmail):
+    events = get_event_past_controller(gmail)
     return jsonify(events)
 
 def get_users_view():
@@ -35,3 +35,6 @@ def get_users_view_gmail(gmail):
 def add_userinfo_view(name, email, phone, password, createat, updateat):
     user = add_userinfo_controller(name, email, phone, password, createat, updateat)
     return user
+
+def register_event_view(event_id,gmail):
+    return register_event_controller(event_id,gmail)

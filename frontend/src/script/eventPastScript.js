@@ -1,14 +1,20 @@
 import {getEventPastByGmail} from '@/api/pastEventsAPI'
-
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
-      Past_events: []
+      Past_events: [],
+      gmail:""
     };
   },
+  created(){
+    this.gmail=Cookies.get('email');
+    // console.log(this.gmail);
+  },
   mounted() {
+    
     // Gọi API từ backend để lấy dữ liệu
-    getEventPastByGmail()
+    getEventPastByGmail(this.gmail)
     .then(response => {
       this.Past_events = response.data; // Assign data to Past_events
     })

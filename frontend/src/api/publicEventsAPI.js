@@ -18,5 +18,11 @@ export function getEventById(eventId) {
   return apiClient.get(`/public-event/${eventId}`);
 }
 
-
+export function registerEvent(eventId,gmail) {
+  const data = {
+    Gmail: gmail,
+    event_id: eventId
+  };
+  return apiClient.post(`/register_event`,data);
+}
 
