@@ -24,3 +24,11 @@ export function add_user(userData) {
   });
 }
 
+export function editInfoUser(gmail, fullName, phoneNumber) {
+  const data = {
+    Gmail: gmail,
+    FullName: fullName,
+    PhoneNumber: phoneNumber
+  };
+  return apiClient.put(`/edit_user`, data);
+}

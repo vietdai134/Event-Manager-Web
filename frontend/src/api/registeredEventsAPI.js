@@ -12,3 +12,11 @@ const apiClient = axios.create({
 export function getEventRegisteredByGmail(gmail) {
     return apiClient.get(`/registered-event/${gmail}`);
 }
+
+export function cancelRegisterEvent(eventId,gmail) {
+  const data = {
+    Gmail: gmail,
+    event_id: eventId
+  };
+  return apiClient.delete(`/cancelRegistered`, { data: data });
+}

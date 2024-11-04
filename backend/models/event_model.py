@@ -122,3 +122,138 @@ def register_event(event_id, gmail):
     finally:
         cursor.close()
         conn.close()  
+
+def cancel_register_event(gmail,event_id):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        DELETE FROM eventregistrations
+        WHERE Gmail = %s AND EventID = %s;
+        """
+        cursor.execute(query, (gmail, event_id))  
+        conn.commit() 
+        return "cancel registered successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to cancel registered event: {e}"
+    finally:
+        cursor.close()
+        conn.close()  
+
+def delete_event(gmail,event_id):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        DELETE FROM eventcreators
+        WHERE Gmail = %s AND EventID = %s;
+        """
+        cursor.execute(query, (gmail, event_id))  
+        conn.commit() 
+        return "event deleted successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to delete event: {e}"
+    finally:
+        cursor.close()
+        conn.close()  
+
+
+def add_event(EventType, EventName,StartTime,EndTime,Location,EventImages,Description,RegisteredCount,MaxAttendees,Gmail):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        INSERT INTO eventsdetail (EventType, EventName, 
+        StartTime, EndTime, Location, EventImages, Description, RegisteredCount, MaxAttendees)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, (EventType, EventName,StartTime,EndTime,Location,EventImages,Description,RegisteredCount,MaxAttendees))  
+        
+        # Get the ID of the newly inserted event
+        event_id = cursor.lastrowid
+        
+        # Insert into eventcreators table
+        creator_query = """
+        INSERT INTO eventcreators (Gmail, EventID)
+        VALUES (%s, %s)
+        """
+        cursor.execute(creator_query, (Gmail, event_id))
+        
+        conn.commit() 
+        return "event added successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to add event: {e}"
+    finally:
+        cursor.close()
+        conn.close() 
+        
+        
+def edit_info_user(FullName,Gmail,PhoneNumber):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        UPDATE userinfo
+        SET FullName = %s, PhoneNumber = %s
+        WHERE Gmail = %s;
+        """
+        cursor.execute(query, (FullName, PhoneNumber, Gmail))  
+        
+        conn.commit() 
+        return "user updated successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to update user: {e}"
+    finally:
+        cursor.close()
+        conn.close() 
+        
+        
+def get_list_regis(event_id):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        cursor.execute("""
+            SELECT userinfo.FullName, userinfo.Gmail, userinfo.PhoneNumber
+            FROM userinfo
+            LEFT JOIN eventregistrations ON eventregistrations.Gmail = userinfo.Gmail
+            WHERE eventregistrations.EventID = %s
+            """, (event_id,))
+        lists = cursor.fetchall()
+        return lists
+    except Exception as e:
+        print(f"Error retrieving registrations: {e}")
+        return []
+    finally:
+        cursor.close()
+        conn.close()
+        
+def edit_info_event(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        UPDATE eventsdetail
+        SET EventType = %s, EventName = %s,StartTime = %s, EndTime = %s,
+            Location = %s, EventImages = %s,Description = %s, MaxAttendees = %s
+        WHERE ID = %s;
+        """
+        cursor.execute(query, (EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees,ID))  
+        
+        conn.commit() 
+        return "event updated successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to update event: {e}"
+    finally:
+        cursor.close()
+        conn.close() 
