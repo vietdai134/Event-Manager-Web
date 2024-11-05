@@ -170,6 +170,21 @@ def edit_event_route():
     # Trả về phản hồi với mã trạng thái 200
     return jsonify({'message': result}), 200
 
+
+@app.route('/api/send_notification', methods=['POST'])
+def send_notification():
+    data = request.get_json()
+    recipient_email = data.get('recipient_email')
+    subject = data.get('subject')
+    message = data.get('message')
+
+    # Gửi email
+    send_email_view(recipient_email, subject, message)
+
+    return jsonify({"message": "Email sent successfully!"})
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

@@ -1,5 +1,7 @@
 # models/event_model.py
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from config import get_db_connection
 
 def get_all_event_created(gmail):
@@ -257,3 +259,30 @@ def edit_info_event(ID,EventType,EventName,StartTime,EndTime,Location,EventImage
     finally:
         cursor.close()
         conn.close() 
+        
+        
+def send_email(recipient_email, subject, message):
+    sender_email = "bot134mail@gmail.com"
+    sender_password = "ycmm fhko zfej slps"
+
+    # Tạo đối tượng email
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = recipient_email
+    msg['Subject'] = subject
+
+    # Gắn nội dung email
+    msg.attach(MIMEText(message, 'plain'))
+
+    try:
+        # Kết nối tới máy chủ Gmail 
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.set_debuglevel(1)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+        print("Email đã được gửi thành công.")
+    except Exception as e:
+        print(f"Lỗi khi gửi email: {e}")
+    finally:
+        server.quit()
