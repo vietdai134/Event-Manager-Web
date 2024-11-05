@@ -88,10 +88,27 @@ def get_all_event_past(gmail):
     return events
 
 
-def get_all_event_Public():
+def get_all_event_Public(gmail):
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM eventsdetail WHERE EventType = 'PL'")
+    # cursor.execute("SELECT * FROM eventsdetail WHERE EventType = 'PL'")
+    cursor.execute("""
+                        SELECT DISTINCT eventsdetail.*
+                        FROM eventsdetail 
+                        WHERE eventsdetail.EventType = 'PL'
+                        AND NOT EXISTS (
+                            SELECT 1 
+                            FROM eventcreators 
+                            WHERE eventcreators.EventID = eventsdetail.ID 
+                            AND eventcreators.Gmail = %s
+                        )
+                        AND NOT EXISTS (
+                            SELECT 1 
+                            FROM eventregistrations 
+                            WHERE eventregistrations.EventID = eventsdetail.ID 
+                            AND eventregistrations.Gmail = %s
+                        );
+                    """,(gmail,gmail,))
     events = cursor.fetchall()
     cursor.close()
     conn.close()

@@ -1,14 +1,20 @@
 import {getPublicEvents} from '@/api/publicEventsAPI'
+import Cookies from "js-cookie";
 
 export default {
   data() {
     return {
-      public_events: []
+      public_events: [],
+      gmail:""
     };
+  },
+  created(){
+    this.gmail=Cookies.get('email');
+    // console.log(this.gmail);
   },
   mounted() {
     // Gọi API từ backend để lấy dữ liệu
-    getPublicEvents()
+    getPublicEvents(this.gmail)
     .then(response => {
       this.public_events = response.data; // Assign data to public_events
     })

@@ -14,9 +14,9 @@ def get_event_created(gmail):
     return get_event_created_view(gmail)
     
 
-@app.route('/api/public-event', methods=['GET'])
-def get_all_event_public():
-    return get_all_event_public_view()
+@app.route('/api/public-event/<string:gmail>', methods=['GET'])
+def get_all_event_public(gmail):
+    return get_all_event_public_view(gmail)
 
 @app.route('/api/public-event/<int:event_id>', methods=['GET'])
 def get_event_public(event_id):

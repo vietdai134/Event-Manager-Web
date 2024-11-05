@@ -7,8 +7,8 @@ def get_event_created_view(gmail):
     events = get_event_created_controller(gmail)
     return jsonify(events)
 
-def get_all_event_public_view():
-    events = get_all_event_public_controller()
+def get_all_event_public_view(gmail):
+    events = get_all_event_public_controller(gmail)
     return jsonify(events)
 
 def get_event_public_view(event_id):
