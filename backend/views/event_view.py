@@ -58,8 +58,8 @@ def edit_user_view(FullName,Gmail,PhoneNumber):
 def user_list_view(event_id):
     return user_list_controller(event_id)
 
-def edit_event_view(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees):
-    return edit_event_controller(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees)
+def edit_event_view(ID,StartTime,EndTime,Location,Description,MaxAttendees):
+    return edit_event_controller(ID,StartTime,EndTime,Location,Description,MaxAttendees)
 
 def send_email_view(recipient_email, subject, message):
     return send_email_controller(recipient_email, subject, message)

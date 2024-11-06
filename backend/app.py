@@ -156,16 +156,13 @@ def edit_event_route():
     print("Received data:", data)
     
     ID = data.get('ID')
-    EventType = data.get('EventType')
-    EventName = data.get('EventName')
     StartTime = data.get('StartTime')
     EndTime = data.get('EndTime')
     Location = data.get('Location')
-    EventImages = data.get('EventImages')
     Description = data.get('Description')
     MaxAttendees = data.get('MaxAttendees')
 
-    result = edit_event_view(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees)
+    result = edit_event_view(ID,StartTime,EndTime,Location,Description,MaxAttendees)
     
     # Trả về phản hồi với mã trạng thái 200
     return jsonify({'message': result}), 200

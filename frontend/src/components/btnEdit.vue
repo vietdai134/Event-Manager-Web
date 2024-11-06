@@ -5,10 +5,17 @@
   
   <script>
   export default {
+    data() {
+    return {
+        eventId:null
+      };
+    },
+    created() {
+      this.eventId = parseInt(this.$route.params.id);
+    },
     methods: {
         editEvent() {
-        // Logic cho việc đăng ký
-        console.log('Sửa event');
+          this.$router.push({ path: `${this.eventId}`+'/editEvent' });
       }
     }
   }

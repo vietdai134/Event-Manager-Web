@@ -123,24 +123,52 @@ def get_event_Public(event_id):
     conn.close()
     return events
 
+# def register_event(event_id, gmail):
+#     conn = get_db_connection() 
+#     cursor = conn.cursor(dictionary=True)
+    
+#     try:
+#         query = """
+#         INSERT INTO eventregistrations (Gmail, EventID)
+#         VALUES (%s, %s)
+#         """
+#         cursor.execute(query, (gmail, event_id))  
+#         conn.commit() 
+#         return "event registered successfully"
+#     except Exception as e:
+#         conn.rollback() 
+#         return f"Failed to registered event: {e}"
+#     finally:
+#         cursor.close()
+#         conn.close()  
 def register_event(event_id, gmail):
-    conn = get_db_connection() 
+    conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     
     try:
-        query = """
+        # Bước 1: Thêm bản ghi vào bảng eventregistrations
+        insert_query = """
         INSERT INTO eventregistrations (Gmail, EventID)
         VALUES (%s, %s)
         """
-        cursor.execute(query, (gmail, event_id))  
-        conn.commit() 
-        return "event registered successfully"
+        cursor.execute(insert_query, (gmail, event_id))
+        
+        # Bước 2: Cập nhật RegisteredCount trong bảng eventsdetail
+        update_query = """
+        UPDATE eventsdetail
+        SET RegisteredCount = RegisteredCount + 1
+        WHERE ID = %s
+        """
+        cursor.execute(update_query, (event_id,))
+        
+        conn.commit()
+        return "Event registered successfully"
     except Exception as e:
-        conn.rollback() 
-        return f"Failed to registered event: {e}"
+        conn.rollback()
+        return f"Failed to register event: {e}"
     finally:
         cursor.close()
-        conn.close()  
+        conn.close()
 
 def cancel_register_event(gmail,event_id):
     conn = get_db_connection() 
@@ -152,6 +180,14 @@ def cancel_register_event(gmail,event_id):
         WHERE Gmail = %s AND EventID = %s;
         """
         cursor.execute(query, (gmail, event_id))  
+        
+        update_query = """
+        UPDATE eventsdetail
+        SET RegisteredCount = RegisteredCount - 1
+        WHERE ID = %s
+        """
+        cursor.execute(update_query, (event_id,))
+        
         conn.commit() 
         return "cancel registered successfully"
     except Exception as e:
@@ -255,18 +291,25 @@ def get_list_regis(event_id):
         cursor.close()
         conn.close()
         
-def edit_info_event(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees):
+def edit_info_event(ID,StartTime,EndTime,Location,Description,MaxAttendees):
     conn = get_db_connection() 
     cursor = conn.cursor(dictionary=True)
     
     try:
+        # query = """
+        # UPDATE eventsdetail
+        # SET EventType = %s, EventName = %s,StartTime = %s, EndTime = %s,
+        #     Location = %s, EventImages = %s,Description = %s, MaxAttendees = %s
+        # WHERE ID = %s;
+        # """
+        
         query = """
         UPDATE eventsdetail
-        SET EventType = %s, EventName = %s,StartTime = %s, EndTime = %s,
-            Location = %s, EventImages = %s,Description = %s, MaxAttendees = %s
+        SET StartTime = %s, EndTime = %s,
+            Location = %s, Description = %s, MaxAttendees = %s
         WHERE ID = %s;
         """
-        cursor.execute(query, (EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees,ID))  
+        cursor.execute(query, (StartTime,EndTime,Location,Description,MaxAttendees,ID))  
         
         conn.commit() 
         return "event updated successfully"

@@ -39,15 +39,15 @@ export function addEvent(EventType, EventName,StartTime,EndTime,
   return apiClient.post(`/add_event`,data);
 }
 
-export function editEvent(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees) {
+export function editEvent(ID,StartTime,EndTime,Location,Description,MaxAttendees) {
   const data = {
     ID:ID,
-    EventType: EventType,
-    EventName: EventName,
+    // EventType: EventType,
+    // EventName: EventName,
     StartTime: StartTime,
     EndTime: EndTime,
     Location: Location,
-    EventImages: EventImages,
+    // EventImages: EventImages,
     Description: Description,
     // RegisteredCount: 0,
     MaxAttendees: MaxAttendees,

@@ -18,19 +18,7 @@
     methods: {
       
       listUserEvent() {
-        // console.log(this.eventId)
-        // try {
-        //   const response = await getListUserRegis(this.eventId);
-        //   this.list_user = response.data;
-          
-        //   // In ra danh sách người dùng
-        //   console.log("List of registered users:", this.list_user);
-          
-        // } catch (error) {
-        //   console.error("Lỗi khi lấy dữ liệu sự kiện:", error);
-        //   this.event = null;
-        // }
-        this.$router.push({ path: '1/listUser' });
+        this.$router.push({ path: `${this.eventId}`+'/listUser' });
       }
     }
   }
