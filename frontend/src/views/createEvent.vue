@@ -123,6 +123,8 @@
 </template>
 
 <script>
+import { addEvent } from '@/api/createdEventsAPI';
+import Cookies from 'js-cookie'; 
 export default {
   data() {
     return {
@@ -144,9 +146,14 @@ export default {
       selectedCity: null,
       selectedDistrict: null,
       selectedWard: null,
-      eventLocation: "",
+      // eventLocation: "",
       specificAddress: "",
+
+      gmail:""
     };
+  },
+  created(){
+    this.gmail=Cookies.get('email');
   },
   mounted() {
     this.fetchCities();
@@ -192,6 +199,41 @@ export default {
         this.imgSrc = require("../assets/img/default_img_create.jpg"); // Đặt lại ảnh mặc định nếu không có file nào
       }
     },
+    async submitEvent() {
+      let eventType="";
+      eventType = this.isPublic ? "PL" : "PR";
+
+      const eventDateTime = `${this.eventDate} ${this.eventTime}`;
+      const startDateTime = new Date(eventDateTime);
+      const endDateTime = new Date(startDateTime);
+      endDateTime.setHours(endDateTime.getHours() + parseInt(this.eventDuration, 10));
+      const formatDateTime = (date) => {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+        const dd = String(date.getDate()).padStart(2, '0');
+        const hh = String(date.getHours()).padStart(2, '0');
+        const min = String(date.getMinutes()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd} ${hh}:${min}:00`;
+      };
+      const formattedStartTime = formatDateTime(startDateTime);
+      const formattedEndTime = formatDateTime(endDateTime);
+      
+      const Location =`${this.specificAddress},${this.selectedWard?.name},${this.selectedDistrict?.name},${this.selectedCity?.name}`
+
+      try {
+        const response = await addEvent(eventType,this.eventName,formattedStartTime,
+                        formattedEndTime,Location,this.fileName,this.description,this.maxParticipants,this.gmail);
+        alert(response.data.message); 
+
+        if (response.data.message === "event added successfully") {
+          window.location.reload(); 
+        }
+      } catch (error) {
+        console.error('Error add event:', error);
+        alert('Có lỗi xảy ra khi thêm sự kiện.');
+      }
+    },
+      
   },
 };
 </script>

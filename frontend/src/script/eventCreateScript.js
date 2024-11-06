@@ -1,6 +1,6 @@
 import { getEvenCreateByGmail } from '@/api/createdEventsAPI'; // Use named import
 import Cookies from "js-cookie";
-
+import { sendEmail } from '@/api/sendNoti';
 export default {
   
   data() {
@@ -22,6 +22,8 @@ export default {
     .catch(error => {
       console.error('Error fetching data:', error);
     });
+    //gửi email
+    sendEmail("vietnguyentran134@gmail.com","test","thong bao he thong")
   },
   computed: {
     filteredEvents() {

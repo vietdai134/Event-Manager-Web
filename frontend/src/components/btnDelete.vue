@@ -1,15 +1,36 @@
 <!-- RegisterButton.vue -->
 <template>
-    <button class="delete_btn" @click="deleteEvent">xoá</button>
+    <button class="delete_btn" @click="deleteEventClick">xoá</button>
   </template>
   
   <script>
+  import { deleteEvent } from '@/api/createdEventsAPI';
+  import Cookies from 'js-cookie'; 
   export default {
+    data() {
+      return {
+        eventId: null,
+        gmail:""
+      };
+    },
+    created(){
+      this.gmail=Cookies.get('email');
+      this.eventId = parseInt(this.$route.params.id);
+    },
     methods: {
-        deleteEvent() {
-        // Logic cho việc đăng ký
-        console.log('Xoá event');
-      }
+      async deleteEventClick(){
+        try {
+          const response = await deleteEvent(this.eventId, this.gmail);
+          alert(response.data.message); 
+
+          if (response.data.message === "Event Deleted successfully") {
+            window.location.reload(); 
+          }
+        } catch (error) {
+          console.error('Error deleting event:', error);
+          alert('Có lỗi xảy ra khi xoá sự kiện.');
+        }
+      },
     }
   }
   </script>

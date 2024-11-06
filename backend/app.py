@@ -14,9 +14,9 @@ def get_event_created(gmail):
     return get_event_created_view(gmail)
     
 
-@app.route('/api/public-event', methods=['GET'])
-def get_all_event_public():
-    return get_all_event_public_view()
+@app.route('/api/public-event/<string:gmail>', methods=['GET'])
+def get_all_event_public(gmail):
+    return get_all_event_public_view(gmail)
 
 @app.route('/api/public-event/<int:event_id>', methods=['GET'])
 def get_event_public(event_id):
@@ -77,6 +77,113 @@ def event_register():
 
     result = register_event_view(event_id, gmail)
     return jsonify({'message': result}), 201
+
+@app.route('/api/cancelRegistered', methods=['DELETE'])
+def cancel_register():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    gmail = data.get('Gmail')
+    event_id = data.get('event_id')
+    
+    if not gmail or not event_id:
+        return jsonify({'message': 'Gmail and EventID are required fields'}), 400
+
+    result = cancel_register_view(gmail,event_id)
+    return jsonify({'message': result}), 201
+
+@app.route('/api/delete_Event', methods=['DELETE'])
+def delete_event():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    gmail = data.get('Gmail')
+    event_id = data.get('event_id')
+    
+    if not event_id:
+        return jsonify({'message': 'EventID are required fields'}), 400
+
+    result = delete_event_view(gmail,event_id)
+    return jsonify({'message': result}), 201
+
+@app.route('/api/add_event', methods=['POST'])
+def add_event_route():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    EventType = data.get('EventType')
+    EventName = data.get('EventName')
+    StartTime = data.get('StartTime')
+    EndTime = data.get('EndTime')
+    Location = data.get('Location')
+    EventImages = data.get('EventImages')
+    Description = data.get('Description')
+    RegisteredCount = data.get('RegisteredCount',0)
+    MaxAttendees = data.get('MaxAttendees')
+    Gmail=data.get('Gmail')
+    result = add_event_view(EventType, EventName,StartTime,EndTime,
+                         Location,EventImages,Description,RegisteredCount
+                         ,MaxAttendees,Gmail)
+    return jsonify({'message': result}), 201
+
+@app.route('/api/edit_user', methods=['PUT'])
+def edit_user_route():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    FullName = data.get('FullName')
+    Gmail = data.get('Gmail')
+    PhoneNumber = data.get('PhoneNumber')
+
+    # Gọi hàm cập nhật với các tham số đã lấy từ dữ liệu đầu vào
+    result = edit_user_view(FullName, Gmail, PhoneNumber)
+    
+    # Trả về phản hồi với mã trạng thái 200
+    return jsonify({'message': result}), 200
+
+
+@app.route('/api/user_list/<int:event_id>', methods=['GET'])
+def get_user_list_regis(event_id):
+    event = user_list_view(event_id)
+    if event:
+        return jsonify(event)  
+    else:
+        return jsonify({"error": "Event not found"}), 404
+
+@app.route('/api/edit_event', methods=['PUT'])
+def edit_event_route():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    ID = data.get('ID')
+    EventType = data.get('EventType')
+    EventName = data.get('EventName')
+    StartTime = data.get('StartTime')
+    EndTime = data.get('EndTime')
+    Location = data.get('Location')
+    EventImages = data.get('EventImages')
+    Description = data.get('Description')
+    MaxAttendees = data.get('MaxAttendees')
+
+    result = edit_event_view(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees)
+    
+    # Trả về phản hồi với mã trạng thái 200
+    return jsonify({'message': result}), 200
+
+
+@app.route('/api/send_notification', methods=['POST'])
+def send_notification():
+    data = request.get_json()
+    recipient_email = data.get('recipient_email')
+    subject = data.get('subject')
+    message = data.get('message')
+
+    # Gửi email
+    send_email_view(recipient_email, subject, message)
+
+    return jsonify({"message": "Email sent successfully!"})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

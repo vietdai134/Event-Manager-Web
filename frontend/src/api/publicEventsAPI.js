@@ -9,8 +9,8 @@ const apiClient = axios.create({
   },
 });
 
-export function getPublicEvents() {
-  return apiClient.get('/public-event'); 
+export function getPublicEvents(gmail) {
+  return apiClient.get(`/public-event/${gmail}`); 
 }
 
 // Hàm lấy thông tin sự kiện theo ID

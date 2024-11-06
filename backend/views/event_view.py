@@ -7,8 +7,8 @@ def get_event_created_view(gmail):
     events = get_event_created_controller(gmail)
     return jsonify(events)
 
-def get_all_event_public_view():
-    events = get_all_event_public_controller()
+def get_all_event_public_view(gmail):
+    events = get_all_event_public_controller(gmail)
     return jsonify(events)
 
 def get_event_public_view(event_id):
@@ -38,3 +38,28 @@ def add_userinfo_view(name, email, phone, password, createat, updateat):
 
 def register_event_view(event_id,gmail):
     return register_event_controller(event_id,gmail)
+
+def cancel_register_view(gmail,event_id):
+    return cancel_register_controller(gmail,event_id)
+
+def delete_event_view(gmail,event_id):
+    return delete_event_controller(gmail,event_id)
+
+def add_event_view(EventType, EventName,StartTime,EndTime,
+                         Location,EventImages,Description,RegisteredCount
+                         ,MaxAttendees,Gmail):
+    return add_event_controller(EventType, EventName,StartTime,EndTime,
+                         Location,EventImages,Description,RegisteredCount
+                         ,MaxAttendees,Gmail)
+    
+def edit_user_view(FullName,Gmail,PhoneNumber):
+    return edit_user_controller(FullName,Gmail,PhoneNumber)
+
+def user_list_view(event_id):
+    return user_list_controller(event_id)
+
+def edit_event_view(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees):
+    return edit_event_controller(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees)
+
+def send_email_view(recipient_email, subject, message):
+    return send_email_controller(recipient_email, subject, message)
