@@ -13,10 +13,14 @@
             <img src="../assets/img/logo2.png" alt="Logo Event" />
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'Home' }">Home</router-link>
+            <router-link class="nav-link" :to="{ name: 'Home' }"
+              >Home</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
+            <router-link class="nav-link" :to="{ name: 'About' }"
+              >About</router-link
+            >
           </li>
           <!-- menu sự kiện -->
           <li
@@ -31,44 +35,58 @@
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
                 ></i>
-                <router-link class="menu_item" :to="{ name: 'EventsPublic' }">Sự kiện công khai</router-link>
+                <router-link class="menu_item" :to="{ name: 'EventsPublic' }"
+                  >Sự kiện công khai</router-link
+                >
               </li>
               <li>
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
                 ></i>
-                <router-link class="menu_item" :to="{ name: 'EventsRegistered' }">Sự kiện đã đăng ký</router-link>
+                <router-link
+                  class="menu_item"
+                  :to="{ name: 'EventsRegistered' }"
+                  >Sự kiện đã đăng ký</router-link
+                >
               </li>
               <li>
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
                 ></i>
-                <router-link class="menu_item" :to="{ name: 'EventsPast' }">Sự kiện đã tham gia</router-link>
+                <router-link class="menu_item" :to="{ name: 'EventsPast' }"
+                  >Sự kiện đã tham gia</router-link
+                >
               </li>
               <li>
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
                 ></i>
-                <router-link class="menu_item" :to="{ name: 'EventsCreated' }">Sự kiện đã tạo</router-link>
+                <router-link class="menu_item" :to="{ name: 'EventsCreated' }"
+                  >Sự kiện đã tạo</router-link
+                >
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'InfoUser' }">Thông tin người dùng</router-link>
+            <router-link class="nav-link" :to="{ name: 'InfoUser' }"
+              >Thông tin người dùng</router-link
+            >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'createEvent' }">Thêm Sự Kiện</router-link>
+            <router-link class="nav-link" :to="{ name: 'createEvent' }"
+              >Thêm Sự Kiện</router-link
+            >
           </li>
         </ul>
         <button
           id="login"
           :class="isLightMode ? 'btn-light-mode' : 'btn-dark-mode'"
-          @click="goToLogin"
+          @click="isLoggedIn ? logout() : goToLogin()"
         >
-          <span>Login</span>
+          <span>{{ isLoggedIn ? "Đăng Xuất" : "Đăng Nhập" }}</span>
           <i
             class="fa-solid fa-right-to-bracket"
             :style="{ color: isLightMode ? '#74C0FC' : 'white' }"
@@ -87,9 +105,12 @@
           <span class="ms-2">{{ isLightMode ? "Light" : "Dark" }}</span>
         </button>
       </div>
-      <div v-if="user_name" :class="isLightMode ? 'name_login light' : 'name_login dark'">
+      <div
+        v-if="user_name"
+        :class="isLightMode ? 'name_login light' : 'name_login dark'"
+      >
         <i class="fa-solid fa-user"></i>
-        <span>{{ user_name }}</span> 
+        <span>{{ user_name }}</span>
       </div>
     </nav>
   </div>
@@ -97,15 +118,16 @@
 
 <script>
 import appHeaderScript from "@/script/appHeaderScript";
-import Cookies from 'js-cookie'; 
+import Cookies from "js-cookie";
 
 export default {
-  props: ['user'],
+  props: ["user"],
   mixins: [appHeaderScript],
   data() {
     return {
       showList: false,
-      user_name: null, 
+      user_name: null,
+      isLoggedIn: false,
     };
   },
   created() {
@@ -114,7 +136,19 @@ export default {
   methods: {
     goToLogin() {
       this.$router.push({ name: "Login" });
-      this.$emit('login'); // Gửi sự kiện 'login' lên App.vue
+      this.$emit("login"); // Gửi sự kiện 'login' lên App.vue
+      this.isLoggedIn = true;
+    },
+    logout() {
+      const confirmLogout = confirm("Bạn có chắc chắn muốn đăng xuất không?");
+
+      if (confirmLogout) {
+        // Nếu người dùng xác nhận, thực hiện đăng xuất
+        Cookies.remove("email");
+        Cookies.remove("fullname");
+        this.user_name = null;
+        this.isLoggedIn = false;
+      }
     },
     updateUserName() {
       const fullNameFromCookie = Cookies.get("fullname");
@@ -127,7 +161,7 @@ export default {
       if (newVal) {
         this.updateUserName(); // Cập nhật tên người dùng từ cookie
       }
-    }
+    },
   },
 };
 </script>

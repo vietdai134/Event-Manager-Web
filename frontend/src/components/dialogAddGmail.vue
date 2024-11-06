@@ -60,14 +60,13 @@ export default {
       newEmail: "",
       emailList: [],
       message: "",
-      validate: false,
-      loading: false,
+      validate: null, // Trạng thái kiểm tra email
+      loading: false, // Trạng thái đang tải
     };
   },
   methods: {
     initQuill() {
       if (this.$refs.editorContainer) {
-        // Check if the ref exists
         this.quill = new Quill(this.$refs.editorContainer, {
           theme: "snow",
         });
@@ -75,7 +74,7 @@ export default {
         console.error("Editor container not found.");
       }
     },
-    addEmail() {
+    async addEmail() {
       const emailPattern = /^[^\s@]+@gmail\.com$/;
 
       if (!this.newEmail) {
@@ -85,69 +84,57 @@ export default {
       } else if (this.emailList.includes(this.newEmail)) {
         alert("Email này đã có trong danh sách!");
       } else {
-        this.checkEmailValidity(this.newEmail)
-          .then((isValid) => {
-            if (isValid) {
-              this.emailList.push(this.newEmail);
-              this.newEmail = "";
-            } else {
-              alert("Email này không tồn tại hoặc không hợp lệ!");
-            }
-          })
-          .catch((error) => {
-            console.error("Lỗi khi kiểm tra email:", error);
-            alert("Có lỗi xảy ra trong quá trình kiểm tra email.");
-          });
+        this.loading = true;
+        this.validate = null;
+
+        const isValid = await this.checkEmailValidity(this.newEmail);
+        this.loading = false;
+
+        if (isValid) {
+          this.emailList.push(this.newEmail);
+          this.newEmail = "";
+          this.validate = true;
+        } else {
+          this.validate = false;
+          alert("Email này không tồn tại hoặc không hợp lệ!");
+        }
       }
     },
     async checkEmailValidity(email) {
-      this.loading = true; // Bắt đầu trạng thái loading
+      const url = `https://cors-anywhere.herokuapp.com/https://apps.emaillistverify.com/api/verifyEmail?secret=wILF2TjO1dAHFSldZQ1RA&email=${email}`;
+
       try {
-        const apiKey = "f6464b9945c045a0b041e24eba4fb157";
-        const response = await fetch(
-          `/api/v2/validate?api_key=${apiKey}&email=${email}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        console.log("Response status:", response.status);
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Data:", data); // Log dữ liệu nhận được để kiểm tra
-
-          this.loading = false; // Kết thúc trạng thái loading
-
-          if (data && data.status === "invalid") {
-            this.validate = false; // Email hợp lệ
-            return false;
-          } else {
-            this.validate = true; // Email không hợp lệ
-            return true;
-          }
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Origin: "http://localhost:8080",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        const text = await response.text();
+        if (text === "ok") {
+          return true; // Email hợp lệ
+        } else if (text === "email_disabled") {
+          return false; // Email không hợp lệ
         } else {
-          console.log("Error response:", response);
-          throw new Error("Không thể kết nối tới ZeroBounce.");
+          // Nếu không nhận được "ok" hoặc "invalid", hãy in ra để kiểm tra
+          console.log("Phản hồi không xác định:", text);
+          return false;
         }
       } catch (error) {
-        this.loading = false;
         console.error("Lỗi khi kiểm tra email:", error);
-        alert("Có lỗi xảy ra trong quá trình kiểm tra email.");
         return false;
       }
     },
-    invite() {
-      // Logic để gửi lời mời cho các email
-      console.log("Gmail:", this.emailList);
-      console.log("Thông điệp:", this.message);
-      this.closeDialog();
+    removeEmail(index) {
+      this.emailList.splice(index, 1);
     },
     closeDialog() {
       this.$emit("close");
+    },
+    invite() {
+      alert("Gửi lời mời thành công!");
+      this.closeDialog();
     },
   },
   watch: {

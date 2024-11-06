@@ -84,7 +84,7 @@ export default {
     return {
       searchQuery: "", // Search query for filtering events
     };
-  },as
+  },
   computed: {
     filteredGroupedEvents() {
       return this.groupedEvents
