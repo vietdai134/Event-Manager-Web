@@ -15,9 +15,9 @@
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'Home' }">Home</router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
-          </li>
+          </li> -->
           <!-- menu sự kiện -->
           <li
             class="nav-item"
@@ -106,10 +106,13 @@ export default {
     return {
       showList: false,
       user_name: null, 
+
     };
   },
   created() {
-    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạo
+
+    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạ
+
   },
   methods: {
     goToLogin() {

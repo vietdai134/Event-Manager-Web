@@ -63,3 +63,6 @@ def edit_event_view(ID,StartTime,EndTime,Location,Description,MaxAttendees):
 
 def send_email_view(recipient_email, subject, message):
     return send_email_controller(recipient_email, subject, message)
+
+def get_eventID_regis_view(gmail):
+    return get_eventID_regis_controller(gmail)

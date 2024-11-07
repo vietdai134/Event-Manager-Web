@@ -52,3 +52,6 @@ def edit_event_controller(ID,StartTime,EndTime,Location,Description,MaxAttendees
 
 def send_email_controller(recipient_email, subject, message):
     return send_email(recipient_email, subject, message)
+
+def get_eventID_regis_controller(gmail):
+    return get_eventID_regis(gmail)

@@ -346,3 +346,18 @@ def send_email(recipient_email, subject, message):
         print(f"Lỗi khi gửi email: {e}")
     finally:
         server.quit()
+        
+def get_eventID_regis(gmail):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(
+        """
+        SELECT eventregistrations.EventID 
+        from eventregistrations 
+        where eventregistrations.Gmail="bob@example.com";
+        WHERE eventregistrations.gmail = %s""",(gmail,))
+    
+    events = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return events

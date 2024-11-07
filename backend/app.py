@@ -180,6 +180,9 @@ def send_notification():
 
     return jsonify({"message": "Email sent successfully!"})
 
+@app.route('/api/eventid_regis/<string:gmail>', methods=['GET'])
+def get_eventID_regis(gmail):
+    return get_eventID_regis_view(gmail)
 
 
 if __name__ == '__main__':
