@@ -11,6 +11,7 @@ import createEvent from '@/views/createEvent.vue'
 
 import Login from '@/views/Login.vue'
 import ListUserView from '@/views/ListUserView.vue'
+import EditView from '@/views/EditView.vue'
 const routes = [
   {
     path: '/',
@@ -45,7 +46,12 @@ const routes = [
     component: DetailEvent,
     props: true, 
   },
-
+  {
+    path: '/Events-Created/:id/editEvent',
+    name: 'EditView',
+    component: EditView,
+    props: true, 
+  },
   {
     path: '/Events-Created/:id/listUser',
     name: 'ListUserView',

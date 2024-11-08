@@ -20,3 +20,8 @@ export function cancelRegisterEvent(eventId,gmail) {
   };
   return apiClient.delete(`/cancelRegistered`, { data: data });
 }
+
+
+export function getEventIDRegisteredByGmail(gmail) {
+  return apiClient.get(`/eventid_regis/${gmail}`);
+}

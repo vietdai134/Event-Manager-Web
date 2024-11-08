@@ -47,8 +47,11 @@ def edit_user_controller(FullName,Gmail,PhoneNumber):
 def user_list_controller(event_id):
     return get_list_regis(event_id)
 
-def edit_event_controller(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees):
-    return edit_info_event(ID,EventType,EventName,StartTime,EndTime,Location,EventImages,Description,MaxAttendees)
+def edit_event_controller(ID,StartTime,EndTime,Location,Description,MaxAttendees):
+    return edit_info_event(ID,StartTime,EndTime,Location,Description,MaxAttendees)
 
 def send_email_controller(recipient_email, subject, message):
     return send_email(recipient_email, subject, message)
+
+def get_eventID_regis_controller(gmail):
+    return get_eventID_regis(gmail)

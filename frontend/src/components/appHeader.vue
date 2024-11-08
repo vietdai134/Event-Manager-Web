@@ -22,6 +22,9 @@
               >About</router-link
             >
           </li>
+          <!-- <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'About' }">About</router-link>
+          </li> -->
           <!-- menu sự kiện -->
           <li
             class="nav-item"
@@ -126,6 +129,7 @@ export default {
   data() {
     return {
       showList: false,
+<<<<<<< HEAD
       user_name: null,
       isLoggedIn: false,
       cookieCheckInterval: null,
@@ -137,6 +141,16 @@ export default {
   },
   beforeUnmount() {
     clearInterval(this.cookieCheckInterval); // Xóa khoảng thời gian khi component bị hủy
+=======
+      user_name: null, 
+
+    };
+  },
+  created() {
+
+    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạ
+
+>>>>>>> a1e3e297f1adc37d8c43a2eec1da6b009ac35786
   },
   methods: {
     goToLogin() {

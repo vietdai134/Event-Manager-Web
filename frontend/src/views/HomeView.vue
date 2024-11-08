@@ -63,12 +63,13 @@
 
 
 <script>
-
+import HomeScript from '@/script/HomeScript';
 export default {
   name: 'HomeView',
   components: {
 
   },
+  mixins: [HomeScript],
   data(){
     return{
       contents: [
