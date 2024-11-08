@@ -106,7 +106,7 @@
         </button>
       </div>
       <div
-        v-if="user_name"
+        v-if="isLoggedIn"
         :class="isLightMode ? 'name_login light' : 'name_login dark'"
       >
         <i class="fa-solid fa-user"></i>
@@ -119,7 +119,7 @@
 <script>
 import appHeaderScript from "@/script/appHeaderScript";
 import Cookies from "js-cookie";
-
+import { confirmNotify } from "@/script/Notification";
 export default {
   props: ["user"],
   mixins: [appHeaderScript],
@@ -128,39 +128,49 @@ export default {
       showList: false,
       user_name: null,
       isLoggedIn: false,
+      cookieCheckInterval: null,
     };
   },
   created() {
-    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạo
+    this.updateLoginStatus();
+    this.startCookieWatcher();
+  },
+  beforeUnmount() {
+    clearInterval(this.cookieCheckInterval); // Xóa khoảng thời gian khi component bị hủy
   },
   methods: {
     goToLogin() {
       this.$router.push({ name: "Login" });
-      this.$emit("login"); // Gửi sự kiện 'login' lên App.vue
-      this.isLoggedIn = true;
+      // this.isLoggedIn = true;
+      this.updateLoginStatus();
     },
     logout() {
-      const confirmLogout = confirm("Bạn có chắc chắn muốn đăng xuất không?");
-
-      if (confirmLogout) {
-        // Nếu người dùng xác nhận, thực hiện đăng xuất
-        Cookies.remove("email");
-        Cookies.remove("fullname");
+      confirmNotify(
+        "Bạn có chắc chắn muốn đăng xuất không?",
+        () => {
+            Cookies.remove("email");
+            Cookies.remove("fullname");
+            this.updateLoginStatus();
+        },
+        () => {
+            console.log("Đã hủy đăng xuất");
+        }
+      );
+    },
+    updateLoginStatus() {
+      const fullNameFromCookie = Cookies.get("fullname");
+      if (fullNameFromCookie) {
+        this.user_name = fullNameFromCookie;
+        this.isLoggedIn = true;
+      } else {
         this.user_name = null;
         this.isLoggedIn = false;
       }
     },
-    updateUserName() {
-      const fullNameFromCookie = Cookies.get("fullname");
-      this.user_name = fullNameFromCookie ? fullNameFromCookie : null; // Cập nhật user_name từ cookie
-    },
-  },
-  watch: {
-    // Lắng nghe thay đổi của props.user
-    user(newVal) {
-      if (newVal) {
-        this.updateUserName(); // Cập nhật tên người dùng từ cookie
-      }
+    startCookieWatcher() {
+      this.cookieCheckInterval = setInterval(() => {
+        this.updateLoginStatus();
+      }, 100);
     },
   },
 };

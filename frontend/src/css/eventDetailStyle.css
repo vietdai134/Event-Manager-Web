@@ -1,103 +1,111 @@
 .container_wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    overflow-y: auto;
-    padding: 20px;
-  }
-  .container_event_detail {
-    display: flex;
-    width: 80%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow-y: auto;
+  padding: 20px;
+}
 
-  }
-  
-  .left_content {
-    width: 65%;
-    height: 100%;
-    background-color: #f8f9fa;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border-radius: 5px;
-    padding: 10px;
-  }
-  
-  .left_content h2 {
-    font-size: 2.3vw;
-    margin-right: 10px;
-  }
-  
-  .img_event {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-  }
-  
-  .img_event img {
-    width: 80%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 10px;
-  }
-  
-  .info_detail {
-    width: calc(100% - 40px);
-    padding: 0 20px;
-  }
-  
-  .info_detail p {
-    font-size: 1.6vw;
-  }
-  
-  .right_content {
-    position: fixed;
-    top: 20%;
-    right: 9%;
-    width: 30%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-  }
-  
-  .event_details_box_light {
-    background-color: #f8f9fa;
+.container_event_detail {
+  display: flex;
+  width: 80%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+}
 
-    text-align: left;
-    width: 80%;
-    margin: 20px;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .event_details_box p {
-    font-size: 1.5vw;
-    margin-right: 10px;
-    line-height: 40px;
-  }
-  
-  .register_btn,.delete_btn, .list_user_btn, .edit_btn,.cancel_register_btn {
-    width: 100%;
-    padding: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2vw;
-    cursor: pointer;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .register_btn:hover,.delete_btn:hover,.list_user_btn:hover, .edit_btn:hover,.cancel_register_btn:hover{
-    background-color: #0056b3;
-  }
+.left_content {
+  width: 65%;
+  height: 100%;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.left_content h2 {
+  font-size: 2.3vw;
+  margin-right: 10px;
+}
+
+.img_event {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.img_event img {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.info_detail {
+  width: calc(100% - 40px);
+  padding: 0 20px;
+}
+
+.info_detail p {
+  font-size: 1.6vw;
+}
+
+.right_content {
+  position: fixed;
+  top: 20%;
+  right: 9%;
+  width: 30%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.event_details_box_light {
+  background-color: #f8f9fa;
+
+  text-align: left;
+  width: 80%;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event_details_box p {
+  font-size: 1.5vw;
+  margin-right: 10px;
+  line-height: 40px;
+}
+
+.register_btn,
+.delete_btn,
+.list_user_btn,
+.edit_btn,
+.cancel_register_btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2vw;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.register_btn:hover,
+.delete_btn:hover,
+.list_user_btn:hover,
+.edit_btn:hover,
+.cancel_register_btn:hover {
+  background-color: #0056b3;
+}

@@ -10,42 +10,46 @@
   
   <script>
 import getIsLightMode from "@/script/getIsLightMode";
-import Cookies from 'js-cookie'; 
+import Cookies from "js-cookie";
 import { registerEvent } from "@/api/publicEventsAPI";
-export default{
+import { notify } from "@/script/Notification";
+
+export default {
   data() {
     return {
       eventId: null,
-      gmail:""
+      gmail: "",
     };
   },
-  
-  mixins:[getIsLightMode], 
+
+  mixins: [getIsLightMode],
   created(){
     this.gmail=Cookies.get('email');
     // console.log(this.gmail);
     this.eventId = parseInt(this.$route.params.id);
+    // console.log(this.eventId)
   },
   methods: {
-    async registerEventClick(){
-      console.log(this.eventId+this.gmail )
+    async registerEventClick() {
+      // console.log(this.eventId);
       try {
         const response = await registerEvent(this.eventId, this.gmail);
-        alert(response.data.message); 
-
+        // notify("Chào bạn!", "info");
         if (response.data.message === "event registered successfully") {
-          window.location.reload(); 
+          notify("Đăng Ký Thành Công!", "success");
+          window.location.reload();
         }
       } catch (error) {
-        console.error('Error registering event:', error);
-        alert('Có lỗi xảy ra khi đăng ký sự kiện.');
+        console.error("Error registering event:", error);
+        notify("Lỗi Khi Đăng Ký!", "error");
+        // alert("Có lỗi xảy ra khi đăng ký sự kiện.");
       }
     },
     someMethod() {
       console.log(this.isLightMode);
-      this.updateLightMode(); 
+      this.updateLightMode();
     },
   },
-}
+};
 </script>
   

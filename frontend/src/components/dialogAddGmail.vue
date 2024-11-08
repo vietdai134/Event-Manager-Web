@@ -49,6 +49,8 @@
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { nextTick } from "vue";
+import { sendEmail } from "@/api/sendNoti";
+// import { getEvenCreateByGmail } from "@/api/createdEventsAPI";
 
 export default {
   name: "DialogAddGmail",
@@ -62,9 +64,23 @@ export default {
       message: "",
       validate: null, // Trạng thái kiểm tra email
       loading: false, // Trạng thái đang tải
+      created_events: [],
+      gmail: [],
     };
   },
   methods: {
+    Fun_getEvenCreateByGmail(gmail, message) {
+      sendEmail(gmail, "Lời mời tham gia sự kiện", message);
+    },
+    invite() {
+      const message = this.quill.getText();
+      this.emailList.forEach((email) => {
+        this.Fun_getEvenCreateByGmail(email, message);
+      });
+
+      alert("Gửi lời mời thành công!");
+      this.closeDialog();
+    },
     initQuill() {
       if (this.$refs.editorContainer) {
         this.quill = new Quill(this.$refs.editorContainer, {
@@ -112,6 +128,7 @@ export default {
           },
         });
         const text = await response.text();
+        console.log(response);
         if (text === "ok") {
           return true; // Email hợp lệ
         } else if (text === "email_disabled") {
@@ -132,10 +149,7 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-    invite() {
-      alert("Gửi lời mời thành công!");
-      this.closeDialog();
-    },
+    
   },
   watch: {
     isVisible(newVal) {

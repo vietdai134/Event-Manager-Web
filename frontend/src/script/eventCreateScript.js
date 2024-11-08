@@ -1,29 +1,28 @@
 import { getEvenCreateByGmail } from '@/api/createdEventsAPI'; // Use named import
 import Cookies from "js-cookie";
-import { sendEmail } from '@/api/sendNoti';
+// import { sendEmail } from '@/api/sendNoti';
 export default {
-  
+
   data() {
     return {
       created_events: [],
-      gmail:""
+      gmail: ""
     };
   },
-  created(){
-    this.gmail=Cookies.get('email');
+  created() {
+    this.gmail = Cookies.get('email');
     // console.log(this.gmail);
   },
   mounted() {
     getEvenCreateByGmail(this.gmail)
-    .then(response => {
-      this.created_events = response.data; // Assign data to created_events
-      console.log(this.created_events)
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-    //gửi email
-    sendEmail("vietnguyentran134@gmail.com","test","thong bao he thong")
+      .then(response => {
+        this.created_events = response.data; 
+        // console.log(this.created_events)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    // sendEmail("buitaia9@gmail.com", "test", "thong bao he thong")
   },
   computed: {
     filteredEvents() {
@@ -71,7 +70,7 @@ export default {
         return require(`@/assets/img/${image}`);
       } catch (error) {
         console.error("Image not found:", error);
-        return null; 
+        return null;
       }
     },
 

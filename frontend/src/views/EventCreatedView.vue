@@ -1,5 +1,5 @@
 <template>
-  <div class="container_event_created">
+  <div class="container_event">
     <h1
       style="text-align: center; font-size: 2.5em; margin: 20px 0"
       :class="isLightMode ? 'light-text' : 'dark-text'"
@@ -9,20 +9,32 @@
 
     <!-- Search Input -->
     <div class="search-container">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Tìm kiếm sự kiện theo tên"
-        class="search-input"
-      />
+      <div class="input-wrapper">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Tìm kiếm sự kiện theo tên"
+          class="search-input"
+        />
+        <i
+          class="fa-solid fa-magnifying-glass search-icon"
+          style="color: #74c0fc"
+        ></i>
+      </div>
     </div>
-      <br>
+    <br />
     <div
       class="list_container"
       v-for="group in filteredGroupedEvents"
       :key="group.date"
     >
-      <h2 :class="isLightMode ? 'event_date_light' : 'event_date_dark'">
+      <h2
+        :class="
+          isLightMode
+            ? 'event_date_light light-mode-text'
+            : 'event_date_dark dark-mode-text'
+        "
+      >
         {{ formatDate(group.date) }}
       </h2>
       <div class="row_container">
@@ -34,7 +46,11 @@
             class="event_card_link"
             exact
           >
-            <div :class="isLightMode ? 'event_card light_card' : 'event_card dark_card'">
+            <div
+              :class="
+                isLightMode ? 'event_card light_card' : 'event_card dark_card'
+              "
+            >
               <img
                 :src="getEventImage(event.EventImages)"
                 alt="Event image"
@@ -47,13 +63,16 @@
                   class="per_sl_now"
                   :style="{
                     width: calculateRegisteredPercentage(event) + '%',
-                    backgroundColor: getColorForPercentage(calculateRegisteredPercentage(event))
+                    backgroundColor: getColorForPercentage(
+                      calculateRegisteredPercentage(event)
+                    ),
                   }"
                 ></div>
               </div>
               <div class="footer_card">
                 <div class="total_per">
-                  {{ event.RegisteredCount }} / {{ event.MaxAttendees }} người đã đăng ký
+                  {{ event.RegisteredCount }} / {{ event.MaxAttendees }} người
+                  đã đăng ký
                 </div>
               </div>
             </div>
@@ -75,9 +94,8 @@ export default {
   methods: {
     someMethod() {
       console.log(this.isLightMode);
-      this.updateLightMode(); 
+      this.updateLightMode();
     },
-    
   },
   mixins: [eventCreateScript, getIsLightMode],
   data() {
@@ -88,13 +106,15 @@ export default {
   computed: {
     filteredGroupedEvents() {
       return this.groupedEvents
-        .map(group => ({
+        .map((group) => ({
           date: group.date,
-          events: group.events.filter(event =>
-            event.EventName.toLowerCase().includes(this.searchQuery.toLowerCase())
+          events: group.events.filter((event) =>
+            event.EventName.toLowerCase().includes(
+              this.searchQuery.toLowerCase()
+            )
           ),
         }))
-        .filter(group => group.events.length > 0);
+        .filter((group) => group.events.length > 0);
     },
   },
 };

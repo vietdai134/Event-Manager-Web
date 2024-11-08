@@ -10,7 +10,7 @@ const apiClient = axios.create({
 });
 
 export function getPublicEvents(gmail) {
-  return apiClient.get(`/public-event/${gmail}`); 
+  return apiClient.get(`/public-event/${gmail}`);
 }
 
 // Hàm lấy thông tin sự kiện theo ID
@@ -18,11 +18,11 @@ export function getEventById(eventId) {
   return apiClient.get(`/public-event/${eventId}`);
 }
 
-export function registerEvent(eventId,gmail) {
+export function registerEvent(eventId, gmail) {
   const data = {
     Gmail: gmail,
     event_id: eventId
   };
-  return apiClient.post(`/register_event`,data);
+  return apiClient.post(`/register_event`, data);
 }
 

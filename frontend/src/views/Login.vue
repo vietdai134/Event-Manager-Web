@@ -164,8 +164,8 @@ export default {
         if (user) {
           if (user.Password === this.password) {
             this.errorMessage = "thành công";
-            Cookies.set("email", user.Gmail, { expires: 15 / (24 * 60) });
-            Cookies.set("fullname", user.FullName, { expires: 15 / (24 * 60) });
+            Cookies.set("email", user.Gmail, { expires: 1 / (24 * 60) });
+            Cookies.set("fullname", user.FullName, { expires: 1 / (24 * 60) });
             this.saveEmail = user.Gmail;
             this.$emit("user-logged-in", user);
             this.$router.push({ name: "Home" });
