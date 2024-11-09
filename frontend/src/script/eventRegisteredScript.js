@@ -16,7 +16,7 @@ export default {
     getEventRegisteredByGmail(this.gmail)
     .then(response => {
       this.register_events = response.data; // Assign data to register_events
-      console.log(this.register_events)
+      // console.log(this.register_events)
     })
     .catch(error => {
       console.error('Error fetching data:', error);

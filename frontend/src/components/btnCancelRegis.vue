@@ -16,6 +16,7 @@
 import getIsLightMode from "@/script/getIsLightMode";
 import Cookies from 'js-cookie'; 
 import { cancelRegisterEvent } from "@/api/registeredEventsAPI";
+import {notify} from "@/script/Notification"
 export default{
   data() {
     return {
@@ -34,10 +35,14 @@ export default{
       // console.log(this.eventId+this.gmail )
       try {
         const response = await cancelRegisterEvent(this.eventId, this.gmail);
-        alert(response.data.message); 
-
+        // alert(response.data.message); 
         if (response.data.message === "cancel registered successfully") {
-          window.location.reload(); 
+          notify("Hủy Đăng Ký Thành Công!", "success");
+          setTimeout(() => {
+            if (window.location.href.includes("Events-Registered")) {
+              this.$router.push({ name: "EventsRegistered" });
+            }
+          }, 1000);
         }
       } catch (error) {
         console.error('Error registering event:', error);

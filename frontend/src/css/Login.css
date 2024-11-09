@@ -3,34 +3,49 @@
   justify-content: center;
   align-items: center;
   height: calc(100% - 100px);
-  margin: 70px 0;
+  margin: 100px 0;
 }
 
 .container_login_signin {
   width: 1000px;
   height: 600px;
   padding: 20px;
-  background-color: #f4f4f4 ;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
   justify-content: space-between;
 }
-.element_hidden{
+
+.element_hidden {
   width: 50%;
   min-width: 50%;
   height: 100%;
   overflow: hidden;
+  background-color: rgb(208, 246, 251);
 }
-.element_hidden img{
+
+.element_hidden img {
   width: 100%;
-  height: auto; 
+  height: auto;
   object-fit: cover;
+  opacity: 0.6;
+
 }
+
 .login_content {
   width: 45%;
   height: 100%;
+}
+
+.login_content form,
+.register_content form {
+  padding: 20px 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .register_content {
@@ -44,6 +59,7 @@ h2 {
 }
 
 .form-group {
+  width: 85%;
   margin-bottom: 10px;
 }
 
@@ -72,18 +88,77 @@ input[type="text"]:focus {
   outline: none;
 }
 
-.login-button {
-  width: 100%;
+.login-button,
+.register-button {
+  margin-top: 10px;
+  width: 50%;
   padding: 10px;
-  background-color: #74C0FC;
+  background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
   border: none;
   color: white;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 4px;
+  border-radius: 35px;
   cursor: pointer;
 }
 
-.login-button:hover {
-  background-color: #007BFF;
+.login-button:hover,
+.register-button:hover {
+  box-shadow: 0 0 20px 1px rgba(32, 59, 232);
+  background: linear-gradient(180deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+}
+
+.icon {
+  top: -75px;
+  right: calc(50% - 75px);
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: rgb(157, 204, 236);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 10px 15px 20px rgb(157, 204, 236, 0.9);
+}
+
+.icon i {
+  color: white;
+  font-size: 100px;
+}
+
+.step_register,
+.step_login {
+  position: absolute;
+  bottom: 40px;
+  width: 100px;
+  height: auto;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #74C0FC;
+}
+
+.step_register {
+  right: calc(50% + 30px);
+  border-radius: 0 30px 30px 0;
+  background: linear-gradient(90deg, rgba(32, 59, 232, 0.4) 0%, rgba(32, 59, 232, 1) 100%);
+}
+
+.step_login {
+  right: calc(50% - 130px);
+  border-radius: 30px 0 0 30px;
+  background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+}
+
+.step_btn {
+  font-size: 13px;
+  width: 80%;
+  color: white;
+}
+
+.step_btn i {
+  margin: 0 4px;
 }

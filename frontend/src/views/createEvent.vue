@@ -2,8 +2,8 @@
   <div class="container_create">
     <div id="form_create">
       <h1>Create Event</h1>
-      <form @submit.prevent="submitEvent">
-        <div class="load_img">
+      <form @submit.prevent="submitEvent" >
+        <div class="load_img" >
           <img :src="imgSrc" alt="Uploaded Image" />
           <div class="input_top">
             <div class="form_group">

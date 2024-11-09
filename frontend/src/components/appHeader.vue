@@ -42,7 +42,7 @@
                   >Sự kiện công khai</router-link
                 >
               </li>
-              <li>
+              <li @click="check_login()">
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
@@ -53,7 +53,7 @@
                   >Sự kiện đã đăng ký</router-link
                 >
               </li>
-              <li>
+              <li @click="check_login()">
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
@@ -62,7 +62,7 @@
                   >Sự kiện đã tham gia</router-link
                 >
               </li>
-              <li>
+              <li @click="check_login()">
                 <i
                   class="fa-solid fa-arrow-right"
                   :style="{ color: isLightMode ? '#74C0FC' : 'black' }"
@@ -122,14 +122,14 @@
 <script>
 import appHeaderScript from "@/script/appHeaderScript";
 import Cookies from "js-cookie";
-import { confirmNotify } from "@/script/Notification";
+import { notify ,confirmNotify} from "@/script/Notification";
+
 export default {
   props: ["user"],
   mixins: [appHeaderScript],
   data() {
     return {
       showList: false,
-<<<<<<< HEAD
       user_name: null,
       isLoggedIn: false,
       cookieCheckInterval: null,
@@ -141,18 +141,18 @@ export default {
   },
   beforeUnmount() {
     clearInterval(this.cookieCheckInterval); // Xóa khoảng thời gian khi component bị hủy
-=======
-      user_name: null, 
-
-    };
-  },
-  created() {
-
-    this.updateUserName(); // Cập nhật tên người dùng từ cookie khi component được tạ
-
->>>>>>> a1e3e297f1adc37d8c43a2eec1da6b009ac35786
   },
   methods: {
+    check_login() {
+      if (
+        !document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("fullname="))
+      ) {
+        notify("Vui lòng đăng nhập!", "warning");
+        return; 
+      }
+    },
     goToLogin() {
       this.$router.push({ name: "Login" });
       // this.isLoggedIn = true;
@@ -162,12 +162,13 @@ export default {
       confirmNotify(
         "Bạn có chắc chắn muốn đăng xuất không?",
         () => {
-            Cookies.remove("email");
-            Cookies.remove("fullname");
-            this.updateLoginStatus();
+          Cookies.remove("email");
+          Cookies.remove("fullname");
+          this.updateLoginStatus();
+          this.$router.push({ name: "Home" });
         },
         () => {
-            console.log("Đã hủy đăng xuất");
+          console.log("Đã hủy đăng xuất");
         }
       );
     },

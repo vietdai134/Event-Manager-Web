@@ -12,9 +12,7 @@ export default {
     toggleTheme() {
       this.isLightMode = !this.isLightMode; // Đảo giá trị
       setLightMode(this.isLightMode); // Gán giá trị mới vào theme.js
-      console.log("new islight: " + getLightMode());
-
-      // Cập nhật màu nền
+      // console.log("new islight: " + getLightMode());
       document.body.style.backgroundColor = this.isLightMode ? '#fff' : '#000';
 
       // Phát ra sự kiện để các component khác có thể nghe

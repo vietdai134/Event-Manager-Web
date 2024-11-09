@@ -6,6 +6,7 @@
   width: 100%;
   overflow-y: auto;
   padding: 20px;
+  margin-top: 50px;
 }
 
 .container_event_detail {
@@ -14,6 +15,7 @@
   height: auto;
   border-radius: 10px;
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 .left_content {

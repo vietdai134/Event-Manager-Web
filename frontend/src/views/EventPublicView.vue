@@ -71,7 +71,7 @@
                   {{ event.RegisteredCount }} / {{ event.MaxAttendees }} người
                   đã đăng ký
                 </div>
-                <btnRegister></btnRegister>
+                <!-- <btnRegister></btnRegister> -->
               </div>
             </div>
           </router-link>
@@ -87,13 +87,13 @@
 
 <script>
 import eventPublicScript from "@/script/eventPublicScript";
-import btnRegister from "@/components/btnRegister.vue";
+// import btnRegister from "@/components/btnRegister.vue";
 import getIsLightMode from "@/script/getIsLightMode";
 
 export default {
-  components: {
-    btnRegister,
-  },
+  // components: {
+  //   btnRegister,
+  // },
   methods: {
     someMethod() {
       console.log(this.isLightMode); // Truy cập biến isLightMode

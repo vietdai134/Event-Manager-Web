@@ -23,8 +23,8 @@ export default {
   },
 
   mixins: [getIsLightMode],
-  created(){
-    this.gmail=Cookies.get('email');
+  created() {
+    this.gmail = Cookies.get("email");
     // console.log(this.gmail);
     this.eventId = parseInt(this.$route.params.id);
     // console.log(this.eventId)
@@ -32,12 +32,25 @@ export default {
   methods: {
     async registerEventClick() {
       // console.log(this.eventId);
+      if (
+        !document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("fullname="))
+      ) {
+        notify("Vui lòng đăng nhập trước khi đăng ký!", "warning");
+        return; // Dừng hàm nếu không có cookie
+      }
       try {
         const response = await registerEvent(this.eventId, this.gmail);
         // notify("Chào bạn!", "info");
-        if (response.data.message === "event registered successfully") {
+        // console.log(response.data.message);
+        if (response.data.message === "Event registered successfully") {
           notify("Đăng Ký Thành Công!", "success");
-          window.location.reload();
+          setTimeout(() => {
+            if (window.location.href.includes("Events-Public")) {
+              this.$router.push({ name: "EventsPublic" });
+            }
+          }, 1000);
         }
       } catch (error) {
         console.error("Error registering event:", error);

@@ -1,6 +1,10 @@
 <template>
   <div class="main_container">
     <div class="container_login_signin">
+      <div class="icon">
+        <i class="fa-solid fa-user" v-if="!showRegister"></i>
+        <i class="fa-solid fa-pen-to-square" v-if="showRegister"></i>
+      </div>
       <div class="login_content" v-if="!showRegister">
         <form @submit.prevent="handleLogin">
           <h2>Login</h2>
@@ -26,7 +30,11 @@
           </div>
           <button type="submit" class="login-button">Đăng nhập</button>
           <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-          <a href="#" @click.prevent="toggleForm">Đăng ký</a>
+          <div class="step_register">
+            <a href="#" class="step_btn" @click.prevent="toggleForm"
+              >Register <i class="fa-solid fa-circle-arrow-right"></i
+            ></a>
+          </div>
         </form>
       </div>
 
@@ -94,8 +102,12 @@
           </div>
           <input type="hidden" v-model="createdAt" />
           <input type="hidden" v-model="updatedAt" />
-          <button type="submit" class="login-button">Đăng Ký</button>
-          <a href="#" @click.prevent="toggleForm">Quay lại Đăng Nhập</a>
+          <button type="submit" class="register-button">Đăng Ký</button>
+          <div class="step_login">
+            <a href="#" class="step_btn" @click.prevent="toggleForm"
+              ><i class="fa-solid fa-circle-arrow-left"></i>Login</a
+            >
+          </div>
         </form>
       </div>
     </div>
@@ -105,9 +117,8 @@
 <script>
 import { get_users_gmail } from "@/api/Login_Register";
 import { add_user } from "@/api/Login_Register";
-
 import Cookies from "js-cookie";
-
+import { notify } from "@/script/Notification";
 export default {
   name: "LoginForm",
   data() {
@@ -164,8 +175,8 @@ export default {
         if (user) {
           if (user.Password === this.password) {
             this.errorMessage = "thành công";
-            Cookies.set("email", user.Gmail, { expires: 1 / (24 * 60) });
-            Cookies.set("fullname", user.FullName, { expires: 1 / (24 * 60) });
+            Cookies.set("email", user.Gmail, { expires: 15 / (24 * 60) });
+            Cookies.set("fullname", user.FullName, { expires: 15 / (24 * 60) });
             this.saveEmail = user.Gmail;
             this.$emit("user-logged-in", user);
             this.$router.push({ name: "Home" });
@@ -187,21 +198,18 @@ export default {
         UpdatedAt: this.updatedAt,
       };
 
-      // In ra dữ liệu để kiểm tra
-      // console.log("Dữ liệu đăng ký:", registrationData);
-
       try {
-        // console.log("Trước phản hồi từ server:");
         const response = await add_user(registrationData);
-        // console.log("Phản hồi từ server:", response.data); // In ra phản hồi từ server
-        alert(response.data.message); // Hiển thị thông báo từ server
         if (response.data.message === "User added successfully") {
-            // Nếu đăng ký thành công, làm mới lại trang Login
-            window.location.reload(); 
+          // this.$router.push({ name: "Login" });
+          notify("Đăng Ký Tài Khoản Thành Công!","success")
+          this.showRegister = false;
+        }else{
+          notify(response.data.message, "info"); 
         }
       } catch (error) {
         console.error("Lỗi khi đăng ký:", error);
-        alert("Đăng ký không thành công. Vui lòng thử lại."); // Thông báo lỗi
+        notify("Đăng ký không thành công. Vui lòng thử lại.", "error"); // Thông báo lỗi
       }
     },
 
@@ -213,7 +221,6 @@ export default {
 </script>
 
 <style scoped src="../css/Login.css">
-
 </style>
 
 

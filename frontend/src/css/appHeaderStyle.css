@@ -199,7 +199,7 @@
 }
 
 .menu_events {
-  z-index: 1;
+  z-index: 1000;
   cursor: pointer;
   display: none;
   position: absolute;
@@ -221,7 +221,6 @@
 .menu_item {
   text-decoration: none;
   color: black;
-
 }
 
 .menu_item:hover {
@@ -230,6 +229,7 @@
 
 .menu_events li {
   position: relative;
+  width: 100%;
 }
 
 .menu_events li i {
@@ -247,4 +247,7 @@
 
 .menu_events li:hover .menu_item {
   margin-left: 4px;
+}
+.menu_events li:hover{
+  background-color: rgb(218, 255, 255);
 }

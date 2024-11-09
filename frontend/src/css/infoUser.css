@@ -1,0 +1,192 @@
+h1 {
+    margin-top: 20px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#app {
+    margin-top: 75px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    padding: 20px 30px;
+}
+
+.container {
+    position: relative;
+    width: 60%;
+    height: auto;
+    padding: 50px;
+    box-shadow: 0 0 15px 1px rgb(225, 225, 225);
+    border-radius: 5px;
+    max-width: 600px;
+}
+
+.form_group_info {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    background-color: #004085;
+}
+
+/* Style for submitted data */
+.submitted-info h2 {
+    color: #333;
+}
+
+.submitted-info p {
+    margin: 5px 0;
+}
+
+.icon_content {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: rgb(157, 204, 236);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 10px 15px 20px rgb(157, 204, 236, 0.9);
+}
+
+.icon i {
+    color: white;
+    font-size: 100px;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* gap: 20px; */
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.profile .profile_info,
+.profile h1 {
+    margin: 5px 0;
+    width: 100%;
+    text-align: left;
+}
+.profile .profile_info{
+    font-size: 14px;
+}
+.profile .name {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.profile .email {
+    color: #545454;
+}
+
+.btn_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-btn {
+    margin-top: 10px;
+    width: 50%;
+    padding: 10px;
+    background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 35px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    box-shadow: 0 0 20px 1px rgba(32, 59, 232);
+    background: linear-gradient(180deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+}
+
+@media (max-width: 800px) {
+    .icon_content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+    .container{
+        padding: 50px;
+    }
+}

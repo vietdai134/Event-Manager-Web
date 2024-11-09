@@ -1,155 +1,154 @@
 <template>
-    <div id="app">
-      <h1>Thông tin người dùng</h1>
+  <div id="app">
+    <div class="container">
+      <div class="profile-container">
+        <div class="icon_content">
+          <div class="icon">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+        <div class="profile">
+          <h1>Profile</h1>
+          <p class="profile_info name">Tên: {{ displayname }}</p>
+          <p class="profile_info email">Email: {{ email }}</p>
+          <p class="profile_info">Ngày tạo: {{ formatDate(createdAt) }}</p>
+          <p class="profile_info">Ngày sửa: {{ formatDate(updatedAt) }}</p>
+        </div>
+      </div>
+      <h1>Thay đổi Thông Tin</h1>
       <form @submit.prevent="handleSubmit">
-        <div>
+        <div class="form_group_info">
           <label for="name">Tên:</label>
           <input type="text" id="name" v-model="name" />
         </div>
-        <div>
+        <div class="form_group_info">
           <label for="email">Gmail:</label>
-          <input type="email" id="email" v-model="email" readonly placeholder="example@gmail.com"  />
-
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            readonly
+            placeholder="example@gmail.com"
+          />
         </div>
-        <div>
+        <div class="form_group_info">
           <label for="PhoneNumber">Số điện thoại:</label>
-          <input type="text" id="PhoneNumber" v-model="PhoneNumber" />
+          <input
+            type="text"
+            id="PhoneNumber"
+            pattern="^0\d{9}$"
+            title="Số điện thoại phải chứa 10 chữ số và bắt đầu bằng 0"
+            v-model="PhoneNumber"
+          />
         </div>
-        <button type="submit">Sửa</button>
+        <div class="btn_content">
+          <button type="submit" class="submit-btn">Sửa</button>
+        </div>
       </form>
-      <div v-if="submitted">
+      <div v-if="submitted" class="submitted-info">
         <h2>Thông tin đã gửi:</h2>
         <p>Tên: {{ name }}</p>
         <p>Gmail: {{ email }}</p>
         <p>Tin nhắn: {{ PhoneNumber }}</p>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
   
-  <script> 
-  import Cookies from 'js-cookie'; 
-  import { get_users_gmail,editInfoUser } from '@/api/Login_Register';
-  export default {
-    created(){
-      this.gmail=Cookies.get('email');
-    },
-    data() {
-      return {
-        name: '',
-        email: '',
-        PhoneNumber: '',
-        submitted: false,
-        user_info: [],
-      };
-    },
-    mounted() {
-      get_users_gmail(this.gmail)
-      .then(response => {
-        this.user_info = response.data; 
-        this.name=this.user_info[0].FullName
-        this.email=this.gmail
-        this.PhoneNumber=this.user_info[0].PhoneNumber
+  <script>
+import Cookies from "js-cookie";
+import { get_users_gmail, editInfoUser } from "@/api/Login_Register";
+import { notify, confirmNotify } from "@/script/Notification";
+
+export default {
+  created() {
+    this.gmail = Cookies.get("email");
+  },
+  data() {
+    return {
+      displayname: "",
+      name: "",
+      email: "",
+      PhoneNumber: "",
+      createdAt: "",
+      updatedAt: "",
+      submitted: false,
+      user_info: [],
+    };
+  },
+  mounted() {
+    get_users_gmail(this.gmail)
+      .then((response) => {
+        this.user_info = response.data;
+        this.name = this.user_info[0].FullName;
+        this.displayname = this.user_info[0].FullName;
+        this.email = this.gmail;
+        this.PhoneNumber = this.user_info[0].PhoneNumber;
+        this.createdAt = this.user_info[0].CreatedAt;
+        this.updatedAt = this.user_info[0].UpdatedAt;
         // console.log(this.user_info[0])
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
-    },
-    methods: {
-      async handleSubmit(){
-        // console.log(this.gmail+""+this.name+""+this.PhoneNumber )
-        try {
-          const response = await editInfoUser(this.gmail,this.name,this.PhoneNumber );
-          alert(response.data.message); 
+  },
+  methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
 
-          if (response.data.message === "user updated successfully") {
-            window.location.reload(); 
-          }
-        } catch (error) {
-          console.error('Error update user:', error);
-          alert('Có lỗi xảy ra khi sửa thông tin.');
-        }
+      return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    },
+    async handleSubmit() {
+      // Kiểm tra xem các giá trị có thay đổi so với dữ liệu ban đầu không
+      if (
+        this.name === this.user_info[0].FullName &&
+        this.PhoneNumber === this.user_info[0].PhoneNumber
+      ) {
+        notify("Vui lòng thay đổi thông tin trước khi lưu.", "warning");
+        return;
       }
-      
+
+      // Sử dụng confirmNotify để xác nhận hành động từ người dùng
+      confirmNotify(
+        "Bạn có chắc muốn thay đổi thông tin không?",
+        async () => {
+          try {
+            const response = await editInfoUser(
+              this.gmail,
+              this.name,
+              this.PhoneNumber
+            );
+            // notify(response.data.message);
+
+            if (response.data.message === "user updated successfully") {
+              notify("Thay đổi thành công", "success"); // Gọi thông báo sau khi reload
+              setTimeout(() => {
+                window.location.reload(); // Sau khi thông báo, reload lại trang
+              }, 500);
+            }
+          } catch (error) {
+            console.error("Error updating user:", error);
+            notify("Có lỗi xảy ra khi sửa thông tin.", "error");
+          }
+        },
+        () => {
+          // Hủy thao tác khi người dùng nhấn nút "Hủy"
+          console.log("Người dùng đã hủy thao tác.");
+        }
+      );
     },
-  };
-  </script>
+  },
+};
+</script>
   
-  <style>
-
-  h1 {
-    margin-top: 20px;
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
-
-  form div {
-    margin-right: 50px;
-    margin-left: 50px;
-    margin-bottom: 15px;
-  }
-
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-
-  input[type="text"],
-  input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-
-  input[type="text"]:focus,
-  input[type="email"]:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-    outline: none;
-  }
-
-  input[readonly] {
-    background-color: #e9ecef;
-    cursor: not-allowed;
-  }
-
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007BFF;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-  }
-
-  button[type="submit"]:active {
-    background-color: #004085;
-  }
-
-  /* Style for submitted data */
-  h2 {
-    color: #333;
-  }
-
-  p {
-    margin: 5px 0;
-  }
+<style scoped src="../css/infoUser.css">
 </style>
 
 

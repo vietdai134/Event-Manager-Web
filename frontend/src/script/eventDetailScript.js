@@ -25,7 +25,6 @@ export default {
   },
   created() {
     const eventId = parseInt(this.$route.params.id);
-    
     this.fetchEvent(eventId);
   },
   methods: {
@@ -62,7 +61,6 @@ export default {
       // Kiểm tra URL hiện tại và trả về tên component phù hợp
       if (window.location.href.includes('Events-Public')) {
         buttons.push('RegisterButton');
-
       } 
       if (window.location.href.includes('Events-Created')) {
         buttons.push('EditButton');

@@ -75,7 +75,7 @@
                   {{ event.RegisteredCount }} / {{ event.MaxAttendees }} người
                   đã đăng ký
                 </div>
-                <btnCancelRegis></btnCancelRegis>
+                <!-- <btnCancelRegis></btnCancelRegis> -->
               </div>
             </div>
           </router-link>
@@ -91,13 +91,13 @@
 
 <script>
 import eventRegisteredScript from "@/script/eventRegisteredScript";
-import btnCancelRegis from "@/components/btnCancelRegis.vue";
+// import btnCancelRegis from "@/components/btnCancelRegis.vue";
 import getIsLightMode from "@/script/getIsLightMode";
 
 export default {
-  components: {
-    btnCancelRegis,
-  },
+  // components: {
+  //   btnCancelRegis,
+  // },
   methods: {
     someMethod() {
       console.log(this.isLightMode);
