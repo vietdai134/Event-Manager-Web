@@ -111,6 +111,7 @@
       <div
         v-if="isLoggedIn"
         :class="isLightMode ? 'name_login light' : 'name_login dark'"
+        :title="user_name"
       >
         <i class="fa-solid fa-user"></i>
         <span>{{ user_name }}</span>

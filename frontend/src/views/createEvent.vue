@@ -2,8 +2,8 @@
   <div class="container_create">
     <div id="form_create">
       <h1>Create Event</h1>
-      <form @submit.prevent="submitEvent" >
-        <div class="load_img" >
+      <form @submit.prevent="submitEvent">
+        <div class="load_img">
           <img :src="imgSrc" alt="Uploaded Image" />
           <div class="input_top">
             <div class="form_group">
@@ -31,7 +31,6 @@
           <div class="datetime">
             <div class="form_group date">
               <label>Event Date:</label>
-              
               <input v-model="eventDate" type="date" required />
             </div>
 
@@ -49,6 +48,8 @@
                 max="6"
                 type="number"
                 required
+                pattern="\d{1,2}"
+                title="Duration should be a number between 1 and 6"
               />
             </div>
             <div class="form_group maxPart">
@@ -59,6 +60,8 @@
                 max="4000"
                 type="number"
                 required
+                pattern="\d{2,4}"
+                title="Max participants should be a number between 31 and 4000"
               />
             </div>
           </div>
@@ -115,16 +118,19 @@
             <textarea v-model="description" required></textarea>
           </div>
         </div>
-
-        <button id="create_btn" type="submit">Create Event</button>
+        <div><button id="create_btn" type="submit">Create Event</button></div>
       </form>
+      
+      <!-- Notification Message -->
+      <span v-if="message" class="notification">{{ message }}</span>
     </div>
   </div>
 </template>
 
+
 <script>
-import { addEvent } from '@/api/createdEventsAPI';
-import Cookies from 'js-cookie'; 
+import { addEvent } from "@/api/createdEventsAPI";
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -148,12 +154,12 @@ export default {
       selectedWard: null,
       // eventLocation: "",
       specificAddress: "",
-
-      gmail:""
+      gmail: "",
+      
     };
   },
-  created(){
-    this.gmail=Cookies.get('email');
+  created() {
+    this.gmail = Cookies.get("email");
   },
   mounted() {
     this.fetchCities();
@@ -200,30 +206,41 @@ export default {
       }
     },
     async submitEvent() {
-      let eventType="";
+      let eventType = "";
       eventType = this.isPublic ? "PL" : "PR";
 
       const eventDateTime = `${this.eventDate} ${this.eventTime}`;
       const startDateTime = new Date(eventDateTime);
       const endDateTime = new Date(startDateTime);
-      endDateTime.setHours(endDateTime.getHours() + parseInt(this.eventDuration, 10));
+      endDateTime.setHours(
+        endDateTime.getHours() + parseInt(this.eventDuration, 10)
+      );
       const formatDateTime = (date) => {
         const yyyy = date.getFullYear();
-        const mm = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
-        const dd = String(date.getDate()).padStart(2, '0');
-        const hh = String(date.getHours()).padStart(2, '0');
-        const min = String(date.getMinutes()).padStart(2, '0');
+        const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+        const dd = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const min = String(date.getMinutes()).padStart(2, "0");
         return `${yyyy}-${mm}-${dd} ${hh}:${min}:00`;
       };
       const formattedStartTime = formatDateTime(startDateTime);
       const formattedEndTime = formatDateTime(endDateTime);
-      
-      const Location =`${this.specificAddress},${this.selectedWard?.name},${this.selectedDistrict?.name},${this.selectedCity?.name}`
+
+      const Location = `${this.specificAddress},${this.selectedWard?.name},${this.selectedDistrict?.name},${this.selectedCity?.name}`;
 
       try {
-        const response = await addEvent(eventType,this.eventName,formattedStartTime,
-                        formattedEndTime,Location,this.fileName,this.description,this.maxParticipants,this.gmail);
-        // alert(response.data.message); 
+        const response = await addEvent(
+          eventType,
+          this.eventName,
+          formattedStartTime,
+          formattedEndTime,
+          Location,
+          this.fileName,
+          this.description,
+          this.maxParticipants,
+          this.gmail
+        );
+        // alert(response.data.message);
 
         if (response.data.message === "event added successfully") {
           if (window.location.href.includes("Create_Event")) {
@@ -231,14 +248,13 @@ export default {
           }
           localStorage.setItem("updateNotification", "Tạo sự kiện thành công");
 
-          // window.location.reload(); 
+          // window.location.reload();
         }
       } catch (error) {
-        console.error('Error add event:', error);
-        alert('Có lỗi xảy ra khi thêm sự kiện.');
+        console.error("Error add event:", error);
+        alert("Có lỗi xảy ra khi thêm sự kiện.");
       }
     },
-      
   },
 };
 </script>

@@ -1,0 +1,117 @@
+.container_list_view {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list_view {
+    margin: 75px 0;
+    width: 40%;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 15px 1px rgb(225, 225, 225);
+    height: 700px;
+    overflow: auto;
+}
+
+.container_list_view h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Danh sách */
+ul {
+    height: 75%;
+    padding: 20px;
+    background-color: rgb(218, 249, 255);
+    list-style-type: none;
+    margin: 0;
+    box-shadow: 0 0 10px 10px rgb(255, 255, 255) inset;
+}
+
+/* Mỗi mục trong danh sách */
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #555;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hiệu ứng hover cho từng item */
+ul li:hover {
+    background-color: #e7f3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tạo các khoảng cách hợp lý giữa các phần tử trong mỗi mục */
+ul li span {
+    margin-right: 15px;
+    text-align: left;
+    font-weight: 500;
+    color: #444;
+}
+
+/* Định dạng từng phần trong mục */
+ul li span:nth-child(1) {
+    flex-basis: 35%;
+}
+
+ul li span:nth-child(2) {
+    flex-basis: 40%;
+}
+
+ul li span:nth-child(3) {
+    flex-basis: 25%;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.search-input {
+    padding: 10px 20px;
+    min-width: 300px;
+    border-radius: 10px;
+    outline: none;
+    border: 1.5px solid #ccc;
+}
+
+.search-input:focus {
+    border-color: #74C0FC;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    /* Điều chỉnh vị trí của icon */
+    transform: translateY(-50%);
+    /* Canh giữa icon theo chiều dọc */
+    color: #74C0FC;
+}

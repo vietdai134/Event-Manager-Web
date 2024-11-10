@@ -17,9 +17,9 @@
           </div>
         </div>
       </div>
-      <div id="form">
+      <!-- <div id="form">
         <input type="text" placeholder="Enter Your Email" required v-model="email">
-      </div>
+      </div> -->
       <div id="icon">
         <span class="ti-credit-card"></span>
         <span class="ti-linkedin"></span>

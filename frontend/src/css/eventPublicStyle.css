@@ -8,7 +8,7 @@
 .container_event {
   margin-top: 50px;
   padding: 20px;
-  max-width: 1500px;
+  /* max-width: 1500px; */
   display: flex;
   flex-direction: column;
   align-items: center;
