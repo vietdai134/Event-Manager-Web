@@ -159,6 +159,7 @@
   align-items: center;
   font-size: 23px;
   cursor: pointer;
+
 }
 
 .light {
@@ -172,6 +173,9 @@
 .name_login span {
   margin-left: 40px;
   font-family: "Times New Roman";
+  text-overflow: ellipsis;
+  white-space: nowrap; 
+  overflow: hidden;
 }
 
 .name_login.light::after {

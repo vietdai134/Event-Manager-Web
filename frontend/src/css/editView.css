@@ -1,0 +1,80 @@
+.container_edit {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.event-form {
+    margin: 75px 0;
+    width: 50%;
+    box-shadow: 0 0 15px 3px rgb(231, 231, 231);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.form_group {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.form_group label {
+    width: 100%;
+}
+
+.form_group_checkbox {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.form_group_checkbox label {
+    width: auto;
+    white-space: nowrap;
+}
+
+.form_group_checkbox input {
+    width: 20px;
+    height: 20px;
+}
+
+.form_group_img img {
+    width: 60%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+.form_group_img{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.event-form button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+#edit_btn {
+    float: right;
+    margin: 20px 10px;
+    padding: 15px 25px;
+    background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+#edit_btn:hover{
+    box-shadow: 0 0 15px 2px rgba(32, 59, 232);
+    background: linear-gradient(180deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
+}
