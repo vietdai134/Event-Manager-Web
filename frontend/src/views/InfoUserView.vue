@@ -43,6 +43,7 @@
         </div>
         <div class="btn_content">
           <button type="submit" class="submit-btn">Sửa</button>
+          <button  @click="ChangePassword">Đổi mật khẩu</button>
         </div>
       </form>
       <div v-if="submitted" class="submitted-info">
@@ -100,6 +101,9 @@ export default {
       });
   },
   methods: {
+    ChangePassword() {
+        this.$router.push({ path: '/Info-User/ChangePassword' });
+    },
     formatDate(dateString) {
       const date = new Date(dateString);
       const day = String(date.getDate()).padStart(2, "0");

@@ -361,3 +361,36 @@ def get_eventID_regis(gmail):
     cursor.close()
     conn.close()
     return events
+
+def update_password(password,gmail):
+    conn = get_db_connection() 
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        query = """
+        update userinfo 
+        set Password = %s
+        where Gmail= %s
+        """
+        cursor.execute(query, (password,gmail))  
+        
+        conn.commit() 
+        return "password updated successfully"
+    except Exception as e:
+        conn.rollback() 
+        return f"Failed to update password: {e}"
+    finally:
+        cursor.close()
+        conn.close() 
+        
+def check_oldPassword(gmail):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    cursor.execute(
+        """SELECT Password FROM userinfo WHERE Gmail = %s
+        """,(gmail,))
+    user  = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user

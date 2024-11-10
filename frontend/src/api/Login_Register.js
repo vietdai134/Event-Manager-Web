@@ -32,3 +32,15 @@ export function editInfoUser(gmail, fullName, phoneNumber) {
   };
   return apiClient.put(`/edit_user`, data);
 }
+
+export function userChangePassword(password,gmail) {
+  const data = {
+    Password:password,
+    Gmail: gmail
+  };
+  return apiClient.put(`/change_password`, data);
+}
+
+export function check_oldPassword(gmail) {
+  return apiClient.get(`/check_oldPassword/${gmail}`);  
+}

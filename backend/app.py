@@ -184,6 +184,23 @@ def send_notification():
 def get_eventID_regis(gmail):
     return get_eventID_regis_view(gmail)
 
+@app.route('/api/change_password', methods=['PUT'])
+def change_password_route():
+    data = request.get_json()
+    print("Received data:", data)
+    
+    Password = data.get('Password')
+    Gmail = data.get('Gmail')
+
+    result = update_password_view(Password,Gmail)
+    
+    # Trả về phản hồi với mã trạng thái 200
+    return jsonify({'message': result}), 200
+
+@app.route('/api/check_oldPassword/<string:gmail>', methods=['GET'])
+def check_oldPassword(gmail):
+    return check_oldPassword_view(gmail)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

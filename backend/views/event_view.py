@@ -66,3 +66,9 @@ def send_email_view(recipient_email, subject, message):
 
 def get_eventID_regis_view(gmail):
     return get_eventID_regis_controller(gmail)
+
+def update_password_view(password,gmail):
+    return update_password_controller(password,gmail)
+
+def check_oldPassword_view(gmail):
+    return check_oldPassword_controller(gmail)
