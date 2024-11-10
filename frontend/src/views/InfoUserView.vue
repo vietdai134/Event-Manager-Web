@@ -78,6 +78,12 @@ export default {
     };
   },
   mounted() {
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+        notify(updateNotification, "success");
+        localStorage.removeItem("updateNotification"); // Xóa thông báo sau khi hiển thị
+    }
+
     get_users_gmail(this.gmail)
       .then((response) => {
         this.user_info = response.data;
@@ -128,10 +134,16 @@ export default {
             // notify(response.data.message);
 
             if (response.data.message === "user updated successfully") {
-              notify("Thay đổi thành công", "success"); // Gọi thông báo sau khi reload
-              setTimeout(() => {
-                window.location.reload(); // Sau khi thông báo, reload lại trang
-              }, 500);
+              // notify("Thay đổi thành công", "success"); // Gọi thông báo sau khi reload
+              // setTimeout(() => {
+              //   window.location.reload(); // Sau khi thông báo, reload lại trang
+              // }, 500);
+
+              if (window.location.href.includes("editEvent")) {
+                this.$router.push({ name: "DetailEventsCreated" });
+              }
+              localStorage.setItem("updateNotification", "Sửa thành công");
+              window.location.reload();
             }
           } catch (error) {
             console.error("Error updating user:", error);

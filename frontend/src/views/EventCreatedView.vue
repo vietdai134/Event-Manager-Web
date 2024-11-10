@@ -89,8 +89,16 @@
 <script>
 import eventCreateScript from "@/script/eventCreateScript";
 import getIsLightMode from "@/script/getIsLightMode";
+import { notify } from "@/script/Notification";
 
 export default {
+  mounted(){
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+        notify(updateNotification, "success");
+        localStorage.removeItem("updateNotification"); // Xóa thông báo sau khi hiển thị
+    }
+  },
   methods: {
     someMethod() {
       console.log(this.isLightMode);

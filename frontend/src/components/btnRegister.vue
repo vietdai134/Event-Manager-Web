@@ -45,12 +45,10 @@ export default {
         // notify("Chào bạn!", "info");
         // console.log(response.data.message);
         if (response.data.message === "Event registered successfully") {
-          notify("Đăng Ký Thành Công!", "success");
-          setTimeout(() => {
-            if (window.location.href.includes("Events-Public")) {
-              this.$router.push({ name: "EventsPublic" });
-            }
-          }, 1000);
+          if (window.location.href.includes("Events-Public")) {
+            this.$router.push({ name: "EventsPublic" });
+          }
+          localStorage.setItem("updateNotification", "Đăng ký thành công");
         }
       } catch (error) {
         console.error("Error registering event:", error);

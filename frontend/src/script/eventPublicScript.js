@@ -1,5 +1,6 @@
 import {getPublicEvents} from '@/api/publicEventsAPI'
 import Cookies from "js-cookie";
+import { notify } from "@/script/Notification";
 
 export default {
   data() {
@@ -12,7 +13,13 @@ export default {
     this.gmail=Cookies.get('email');
     // console.log(this.gmail);
   },
+
   mounted() {
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+        notify(updateNotification, "success");
+        localStorage.removeItem("updateNotification"); 
+    }
     // Gọi API từ backend để lấy dữ liệu
     getPublicEvents(this.gmail)
     .then(response => {

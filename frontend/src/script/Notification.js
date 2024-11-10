@@ -3,7 +3,7 @@ import { toast } from 'vue3-toastify';
 import "../css/createEvent.css"
 export const notify = (message, type) => {
     toast(message, {
-        autoClose: 3000,
+        autoClose: 2000,
         type: type,
     });
 };

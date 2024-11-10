@@ -1,5 +1,7 @@
 import {getEventRegisteredByGmail} from '@/api/registeredEventsAPI'
 import Cookies from "js-cookie";
+import { notify } from "@/script/Notification";
+
 export default {
   data() {
     return {
@@ -12,6 +14,12 @@ export default {
     // console.log(this.gmail);
   },
   mounted() {
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+        notify(updateNotification, "success");
+        localStorage.removeItem("updateNotification"); 
+    }
+
     // Gọi API từ backend để lấy dữ liệu
     getEventRegisteredByGmail(this.gmail)
     .then(response => {

@@ -21,10 +21,14 @@
       async deleteEventClick(){
         try {
           const response = await deleteEvent(this.eventId, this.gmail);
-          alert(response.data.message); 
+          // alert(response.data.message); 
 
-          if (response.data.message === "Event Deleted successfully") {
-            window.location.reload(); 
+          if (response.data.message === "event deleted successfully") {
+            if (window.location.href.includes(`/Events-Created/${this.eventId}`)) {
+              this.$router.push({ name: "EventsCreated" });
+            }
+            localStorage.setItem("updateNotification", "Đã xoá thành công");
+            // window.location.reload(); 
           }
         } catch (error) {
           console.error('Error deleting event:', error);

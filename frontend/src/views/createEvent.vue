@@ -223,10 +223,15 @@ export default {
       try {
         const response = await addEvent(eventType,this.eventName,formattedStartTime,
                         formattedEndTime,Location,this.fileName,this.description,this.maxParticipants,this.gmail);
-        alert(response.data.message); 
+        // alert(response.data.message); 
 
         if (response.data.message === "event added successfully") {
-          window.location.reload(); 
+          if (window.location.href.includes("Create_Event")) {
+            this.$router.push({ name: "EventsCreated" });
+          }
+          localStorage.setItem("updateNotification", "Tạo sự kiện thành công");
+
+          // window.location.reload(); 
         }
       } catch (error) {
         console.error('Error add event:', error);

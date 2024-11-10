@@ -53,8 +53,16 @@
   
   <script>
 import eventDetailScript from "@/script/eventDetailScript";
+import { notify } from "@/script/Notification";
 export default {
   mixins: [eventDetailScript],
+  mounted(){
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+        notify(updateNotification, "success");
+        localStorage.removeItem("updateNotification"); // Xóa thông báo sau khi hiển thị
+    }
+  },
 };
 </script>
   

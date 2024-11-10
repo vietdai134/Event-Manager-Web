@@ -55,6 +55,7 @@
         list_event: [],
       };
     },
+    
     async created() {
       this.eventId = parseInt(this.$route.params.id);
   
@@ -100,10 +101,13 @@
         try {
             const response = await editEvent(this.eventId,this.event.StartTime,this.event.EndTime,
                                     this.event.Location,this.event.Description,this.event.MaxAttendees);
-            alert(response.data.message); 
+            // alert(response.data.message); 
 
             if (response.data.message === "event updated successfully") {
-            window.location.reload(); 
+              if (window.location.href.includes("editEvent")) {
+                this.$router.push({ name: "DetailEventsCreated" });
+              }
+              localStorage.setItem("updateNotification", "Sửa thành công");
             }
         } catch (error) {
             console.error('Error update event:', error);

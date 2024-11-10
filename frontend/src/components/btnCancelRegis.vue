@@ -37,16 +37,19 @@ export default{
         const response = await cancelRegisterEvent(this.eventId, this.gmail);
         // alert(response.data.message); 
         if (response.data.message === "cancel registered successfully") {
-          notify("Hủy Đăng Ký Thành Công!", "success");
-          setTimeout(() => {
-            if (window.location.href.includes("Events-Registered")) {
-              this.$router.push({ name: "EventsRegistered" });
-            }
-          }, 1000);
+          // notify("Hủy Đăng Ký Thành Công!", "success");
+          // setTimeout(() => {
+          if (window.location.href.includes("Events-Registered")) {
+            this.$router.push({ name: "EventsRegistered" });
+          }
+          // }, 1000);
+          localStorage.setItem("updateNotification", "Huỷ đăng ký thành công");
+          
         }
       } catch (error) {
         console.error('Error registering event:', error);
-        alert('Có lỗi xảy ra khi đăng ký sự kiện.');
+        // alert('Có lỗi xảy ra khi đăng ký sự kiện.');
+        notify("Lỗi Khi Huỷ đăng Ký!", "error");
       }
     },
     someMethod() {
