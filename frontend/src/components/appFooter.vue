@@ -1,11 +1,6 @@
 <template>
     <footer>
       <div id="footer--background" :key="index" v-for="(footer, index) in footers" class="footer">
-        <div>
-          <div class="footer--background__update">
-            {{ footer.update }}
-          </div>
-        </div>
         <div id="menu">
           <div class="footer--background__menu" :key="i" v-for="(menu,i) in footer.menues">
             <div>{{ menu }}</div>
@@ -17,9 +12,6 @@
           </div>
         </div>
       </div>
-      <!-- <div id="form">
-        <input type="text" placeholder="Enter Your Email" required v-model="email">
-      </div> -->
       <div id="icon">
         <span class="ti-credit-card"></span>
         <span class="ti-linkedin"></span>
@@ -40,7 +32,7 @@ export default {
         return{
             footers: [
                 {
-                update: 'Get updates on fun stuff you probably want to know about in your inbox.',
+
                 menues: [
                     'Shop All',
                     'About Us',
@@ -66,18 +58,54 @@ export default {
 html, body {
     height: 100%;
     margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 .app {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Tạo chiều cao tối thiểu cho toàn bộ trang */
+    min-height: 100vh; /* Ensures full-page height layout */
 }
 
-.footer {
-    margin-top: auto; /* Đẩy footer xuống dưới cùng */
-    background-color: #f1f1f1; /* Màu nền cho footer */
-    padding: 10px; /* Khoảng cách bên trong footer */
-    text-align: center; /* Canh giữa nội dung */
+footer {
+    margin-top: auto; /* Push footer to the bottom */
+    background-color: #f1f1f1; /* Footer background color */
+    padding: 20px 0; /* Space around footer content */
+    width: 100%; /* Make footer span the full width */
 }
+
+#footer--background {
+    display: flex;
+    justify-content: space-around; /* Space out menu and support evenly */
+    padding: 10px 0; /* Space between sections */
+}
+
+.footer--background__menu,
+.footer--background__support {
+    flex: 1; /* Ensure both sections take equal space */
+    text-align: left; /* Align text to the left for clarity */
+}
+
+#menu div,
+#sp div {
+    margin-bottom: 8px; /* Space between menu/support items */
+}
+
+#icon {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center social icons */
+    gap: 15px; /* Space between icons */
+}
+
+#icon span {
+    font-size: 20px; /* Adjust icon size */
+    cursor: pointer; /* Make icons clickable */
+    transition: transform 0.2s ease;
+}
+
+#icon span:hover {
+    transform: scale(1.2); /* Slightly enlarge icons on hover */
+}
+
 </style>

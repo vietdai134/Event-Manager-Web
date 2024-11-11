@@ -1,7 +1,10 @@
 <template>
-  <AppHeader :user="user" />
-  <router-view @user-logged-in="handleUserLoggedIn" />
-  <AppFooter />
+  <div>
+    <AppHeader :user="user" />
+    <router-view @user-logged-in="handleUserLoggedIn" />
+    <AppFooter />
+  </div>
+  
 </template>
 
 <script>

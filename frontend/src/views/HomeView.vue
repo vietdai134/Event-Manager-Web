@@ -73,8 +73,8 @@ export default {
   data(){
     return{
       contents: [
-        'MDK Group - Dịch vụ tổ chức sự kiện nâng tầm đẳng cấp',
-        'Với đội ngũ nhân viên giàu kinh nghiệm, nhiệt huyết và đầy tâm huyết, Ignition Group cam kết mang đến cho bạn những sự kiện ấn tượng, độc đáo và thành công ngoài mong đợi. ',
+        'MDK Group - Nền tảng tổ chức sự kiện chuyên nghiệp',
+        'Với đội ngũ nhân viên giàu kinh nghiệm, nhiệt huyết và đầy tâm huyết, MDK Group cam kết mang đến cho bạn những sự kiện ấn tượng, độc đáo và thành công ngoài mong đợi. ',
         'Liên Hệ Ngay',
         'https://ignitionagency.vn/wp-content/uploads/2024/06/TSN.png'
       ],
@@ -88,12 +88,12 @@ export default {
         {
           image: 'https://ignitionagency.vn/wp-content/uploads/2024/05/Doi-ngu-dang-tin-cay-2.png',
           title: 'Đội ngũ chuyên nghiệp',
-          content: 'Đội ngũ nhân viên sáng tạo, nhiệt tình và giàu kinh nghiệm, luôn cập nhật những xu hướng mới nhất trong lĩnh vực tổ chức sự kiện.'
+          content: 'Đội ngũ nhân viên sáng tạo, nhiệt tình và giàu kinh nghiệm, luôn cập nhật những xu hướng mới nhất.'
         },
         {
           image: 'https://ignitionagency.vn/wp-content/uploads/2024/05/Tap-trung-vao-sang-tao-1.png',
           title: 'Kinh nghiệm dày dặn',
-          content: 'Có nhiều năm kinh nghiệm trong lĩnh vực tổ chức sự kiện và đã thành công tổ chức hàng trăm sự kiện lớn nhỏ cho các khách hàng trong và ngoài nước.'
+          content: 'Có nhiều năm kinh nghiệm trong lĩnh vực và đã thành công xây dựng hàng trăm phần mềm quản lí sự kiện lớn nhỏ cho các khách hàng trong và ngoài nước.'
         },{
           image: 'https://ignitionagency.vn/wp-content/uploads/2024/05/San-choi-doc-dao.png',
           title: 'Sáng tạo và đổi mới',
@@ -110,8 +110,8 @@ export default {
       ],
       megaEvents:[
         {
-          title: 'Mega Event',
-          content: 'Biến ý tưởng táo bạo thành sự kiện bùng nổ, khuấy động mọi giác quan với sức hút không thể cưỡng lại. Ignition Group sở hữu năng lực tổ chức các sự kiện quy mô lớn, đảm bảo an toàn, chuyên nghiệp, ấn tượng và thành công. ',
+          title: 'Các sự kiện công khai',
+          content: 'Khám phá các sự kiện công khai đang diễn ra trên nền tảng của chúng tôi. Tại đây, bạn có thể xem chi tiết về từng sự kiện, từ thời gian, địa điểm đến các hoạt động nổi bật. Chúng tôi cung cấp thông tin đầy đủ và dễ hiểu để bạn có thể nhanh chóng lựa chọn và đăng ký tham gia các sự kiện phù hợp với sở thích của mình.',
           link: [
             'https://ignitionagency.vn/wp-content/uploads/2024/06/z5421069476620_29e9997c21f369734e68821e71863dba.jpg',
             'https://ignitionagency.vn/wp-content/uploads/2024/06/z5421069456671_b7dcfd8c8fda4d2537f3a37a2e82815d.jpg',
@@ -122,8 +122,8 @@ export default {
       ],
       launchEvents:[
         {
-          title: 'Launch Event',
-          content: 'Ignition Group giúp bạn tạo ấn tượng mạnh mẽ khi giới thiệu sản phẩm mới, khai trương cửa hàng hoặc dịch vụ… Chúng tôi thiết kế các sự kiện độc đáo, thu hút sự chú ý của công chúng và truyền thông, đảm bảo sản phẩm của bạn được chào đón nồng nhiệt. ',
+          title: 'Sự kiện đã đăng ký',
+          content: 'Quản lý các sự kiện bạn đã đăng ký tham gia trong phần này. Tất cả các thông tin về sự kiện, bao gồm thời gian, địa điểm, thông báo từ người tổ chức sẽ được lưu trữ để bạn dễ dàng theo dõi. Tính năng này giúp bạn không bỏ lỡ bất kỳ sự kiện nào mà bạn đã đăng ký, với thông báo nhắc nhở trước mỗi sự kiện.',
           link: [
             'https://ignitionagency.vn/wp-content/uploads/2024/06/PAD9080.jpg',
             'https://ignitionagency.vn/wp-content/uploads/2024/06/PAD8837.jpg',
@@ -134,8 +134,8 @@ export default {
       ],
       specialEvents: [
         {
-          title: 'Special Event',
-          content: 'Kỷ niệm những dấu mốc quan trọng, truyền tải thông điệp ý nghĩa với các sự kiện đặc biệt được thiết kế riêng. Ignition Group thấu hiểu mong muốn của bạn và sáng tạo những ý tưởng độc đáo, giúp sự kiện trở thành trải nghiệm khó quên.',
+          title: 'Sự kiện đã tạo',
+          content: 'Lưu giữ mọi khoảnh khắc đáng nhớ tại các sự kiện bạn đã tham gia. Phần này cung cấp một danh sách tổng hợp các sự kiện trước đây mà bạn từng tham gia, giúp bạn dễ dàng xem lại thông tin và lưu lại những kỷ niệm đáng giá. Đối với người dùng thường xuyên tham dự các sự kiện, tính năng này sẽ trở thành một nơi lưu trữ những trải nghiệm thú vị của bạn.',
           links: [
             'https://ignitionagency.vn/wp-content/uploads/2024/06/FINN0248-2048x1280.jpg',
             'https://ignitionagency.vn/wp-content/uploads/2024/06/PHAN8374-Edit-2048x1366.jpg',
