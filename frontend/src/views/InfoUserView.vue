@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container_infoUser">
       <div class="profile-container">
         <div class="icon_content">
           <div class="icon">
@@ -45,7 +45,7 @@
         </div>
         <div class="btn_content">
           <button type="submit" class="submit-btn">Sửa</button>
-          <button  @click="ChangePassword">Đổi mật khẩu</button>
+          <button type="button" class="submit-btn" @click="openDialog">Đổi mật khẩu</button>
         </div>
       </form>
       <!-- <div v-if="submitted" class="submitted-info">
@@ -54,17 +54,23 @@
         <p>Gmail: {{ email }}</p>
         <p>Tin nhắn: {{ PhoneNumber }}</p>
       </div> -->
+      <dialogChangePass v-if="isDialogOpen" @close="closeDialog" />
     </div>
   </div>
 </template>
 
   
   <script>
+import dialogChangePass from "../components/ChangePasswordView.vue";
 import Cookies from "js-cookie";
 import { get_users_gmail, editInfoUser } from "@/api/Login_Register";
 import { notify, confirmNotify } from "@/script/Notification";
 
 export default {
+  components: {
+    dialogChangePass,
+  },
+  
   created() {
     this.gmail = Cookies.get("email");
   },
@@ -78,6 +84,7 @@ export default {
       updatedAt: "",
       submitted: false,
       user_info: [],
+      isDialogOpen: false,
     };
   },
   mounted() {
@@ -103,11 +110,21 @@ export default {
       });
   },
   methods: {
-    ChangePassword() {
-        this.$router.push({ path: '/Info-User/ChangePassword' });
+    openDialog() {
+      if (!Cookies.get("fullname")) {
+        notify("Vui lòng đăng nhập trước khi đổi mật khẩu.", "warning");
+        return;
+      }
+      this.isDialogOpen = true;
     },
+    closeDialog() {
+      this.isDialogOpen = false;
+    },
+    // ChangePassword() {
+    //     this.$router.push({ path: '/Info-User/ChangePassword' });
+    // },
     formatDate(dateString) {
-      if(dateString===""){
+      if (dateString === "") {
         return "dd/MM/yyyy hh:MM:ss";
       }
       const date = new Date(dateString);

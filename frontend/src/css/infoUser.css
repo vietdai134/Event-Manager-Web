@@ -14,7 +14,7 @@ h1 {
     padding: 20px 30px;
 }
 
-.container {
+.container_infoUser {
     position: relative;
     width: 60%;
     height: auto;
@@ -157,12 +157,12 @@ input[readonly] {
 .btn_content {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .submit-btn {
     margin-top: 10px;
-    width: 50%;
+    width: 40%;
     padding: 10px;
     background: linear-gradient(90deg, rgba(32, 59, 232, 1) 0%, rgba(32, 59, 232, 0.4) 100%);
     border: none;
@@ -196,7 +196,7 @@ input[readonly] {
         text-align: center;
     }
 
-    .container {
+    .container_infoUser {
         padding: 50px;
     }
 }
