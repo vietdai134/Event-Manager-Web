@@ -16,8 +16,12 @@
         </button>
       </div>
       <div v-if="loading" class="loading">Đang kiểm tra email...</div>
-      <div v-if="validate === true" class="valid">Email hợp lệ</div>
-      <div v-if="validate === false" class="invalid">Email không hợp lệ</div>
+      <div v-if="validate === true" class="valid" style="color: green">
+        Email hợp lệ
+      </div>
+      <div v-if="validate === false" class="invalid" style="color: red">
+        Email không hợp lệ
+      </div>
       <div class="email_list">
         <h4>Danh sách Gmail đã thêm:</h4>
         <ul class="list_added_email">
@@ -51,6 +55,7 @@ import "quill/dist/quill.snow.css";
 import { nextTick } from "vue";
 import { sendEmail } from "@/api/sendNoti";
 // import { getEvenCreateByGmail } from "@/api/createdEventsAPI";
+import { notify, confirmNotify } from "@/script/Notification";
 
 export default {
   name: "DialogAddGmail",
@@ -73,13 +78,33 @@ export default {
       sendEmail(gmail, "Lời mời tham gia sự kiện", message);
     },
     invite() {
-      const message = this.quill.getText();
-      this.emailList.forEach((email) => {
-        this.Fun_getEvenCreateByGmail(email, message);
-      });
+      if (this.emailList.length === 0) {
+        notify("Danh sách email không được để trống!", "warning");
+        return;
+      }
 
-      alert("Gửi lời mời thành công!");
-      this.closeDialog();
+      const message = this.quill.getText().trim();
+      if (message === "") {
+        notify("Thông điệp không được để trống!", "warning");
+        return;
+      }
+      confirmNotify(
+        "Bạn có chắc muốn mời?",
+        () => {
+          const message = this.quill.getText();
+          this.emailList.forEach((email) => {
+            this.Fun_getEvenCreateByGmail(email, message);
+          });
+          notify("Gửi lời mời thành công!", "success");
+          // alert("Gửi lời mời thành công!");
+          this.emailList = [];
+          this.quill.setText("");
+          (this.validate = null), this.closeDialog();
+        },
+        () => {
+          console.log("Đã hủy mời!");
+        }
+      );
     },
     initQuill() {
       if (this.$refs.editorContainer) {
@@ -94,49 +119,40 @@ export default {
       const emailPattern = /^[^\s@]+@gmail\.com$/;
 
       if (!this.newEmail) {
-        alert("Vui lòng nhập một địa chỉ email!");
+        notify("Vui lòng nhập một địa chỉ email!", "warning");
       } else if (!emailPattern.test(this.newEmail)) {
-        alert("Địa chỉ email không hợp lệ!");
+        notify("Địa chỉ email không hợp lệ!", "warning");
       } else if (this.emailList.includes(this.newEmail)) {
-        alert("Email này đã có trong danh sách!");
+        notify("Email này đã có trong danh sách!", "warning");
       } else {
         this.loading = true;
         this.validate = null;
-
         const isValid = await this.checkEmailValidity(this.newEmail);
         this.loading = false;
-
         if (isValid) {
           this.emailList.push(this.newEmail);
           this.newEmail = "";
           this.validate = true;
+          notify("Thêm Email thành công!", "success");
         } else {
           this.validate = false;
-          alert("Email này không tồn tại hoặc không hợp lệ!");
+          notify("Email này không tồn tại hoặc không hợp lệ!", "warning");
         }
       }
     },
     async checkEmailValidity(email) {
-      const url = `https://cors-anywhere.herokuapp.com/https://apps.emaillistverify.com/api/verifyEmail?secret=wILF2TjO1dAHFSldZQ1RA&email=${email}`;
+      const url = `https://emailvalidation.abstractapi.com/v1/?api_key=98c148c7a3cd4091a489f0dc1b08cb18&email=${email}`;
 
       try {
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            Origin: "http://localhost:8080",
-            "X-Requested-With": "XMLHttpRequest",
-          },
-        });
-        const text = await response.text();
-        console.log(response);
-        if (text === "ok") {
+        const response = await fetch(url, { method: "GET" });
+        const data = await response.json();
+        // console.log(data);
+
+        // Kiểm tra trạng thái "deliverability"
+        if (data.deliverability === "DELIVERABLE") {
           return true; // Email hợp lệ
-        } else if (text === "email_disabled") {
-          return false; // Email không hợp lệ
         } else {
-          // Nếu không nhận được "ok" hoặc "invalid", hãy in ra để kiểm tra
-          console.log("Phản hồi không xác định:", text);
-          return false;
+          return false; // Email không hợp lệ
         }
       } catch (error) {
         console.error("Lỗi khi kiểm tra email:", error);
@@ -149,7 +165,6 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-    
   },
   watch: {
     isVisible(newVal) {

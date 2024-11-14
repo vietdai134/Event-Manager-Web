@@ -110,10 +110,19 @@
 
 <script>
 import HomeScript from "@/script/HomeScript";
+import { notify } from "@/script/Notification";
+
 export default {
   name: "HomeView",
   components: {},
   mixins: [HomeScript],
+  mounted() {
+    const updateNotification = localStorage.getItem("updateNotification");
+    if (updateNotification) {
+      notify(updateNotification, "success");
+      localStorage.removeItem("updateNotification"); // Xóa thông báo sau khi hiển thị
+    }
+  },
   data() {
     return {
       contents: [

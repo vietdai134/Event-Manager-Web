@@ -45,7 +45,9 @@
         </div>
         <div class="btn_content">
           <button type="submit" class="submit-btn">Sửa</button>
-          <button type="button" class="submit-btn" @click="openDialog">Đổi mật khẩu</button>
+          <button type="button" class="submit-btn" @click="openDialog">
+            Đổi mật khẩu
+          </button>
         </div>
       </form>
       <!-- <div v-if="submitted" class="submitted-info">
@@ -70,7 +72,7 @@ export default {
   components: {
     dialogChangePass,
   },
-  
+
   created() {
     this.gmail = Cookies.get("email");
   },
@@ -93,7 +95,6 @@ export default {
       notify(updateNotification, "success");
       localStorage.removeItem("updateNotification"); // Xóa thông báo sau khi hiển thị
     }
-
     get_users_gmail(this.gmail)
       .then((response) => {
         this.user_info = response.data;
@@ -115,6 +116,7 @@ export default {
         notify("Vui lòng đăng nhập trước khi đổi mật khẩu.", "warning");
         return;
       }
+      this.$router.push({ path: "/Info-User/ChangePassword" });
       this.isDialogOpen = true;
     },
     closeDialog() {

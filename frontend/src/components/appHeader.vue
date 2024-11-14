@@ -123,7 +123,7 @@
 <script>
 import appHeaderScript from "@/script/appHeaderScript";
 import Cookies from "js-cookie";
-import { notify ,confirmNotify} from "@/script/Notification";
+import { notify, confirmNotify } from "@/script/Notification";
 
 export default {
   props: ["user"],
@@ -146,12 +146,10 @@ export default {
   methods: {
     check_login() {
       if (
-        !document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("fullname="))
+        !document.cookie.split("; ").find((row) => row.startsWith("fullname="))
       ) {
         notify("Vui lòng đăng nhập!", "warning");
-        return; 
+        return;
       }
     },
     goToLogin() {
@@ -166,6 +164,7 @@ export default {
           Cookies.remove("email");
           Cookies.remove("fullname");
           this.updateLoginStatus();
+          localStorage.setItem("updateNotification", "Đăng Xuất Thành Công");
           this.$router.push({ name: "Home" });
         },
         () => {

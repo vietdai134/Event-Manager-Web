@@ -12,7 +12,7 @@ import createEvent from '@/views/createEvent.vue'
 import Login from '@/views/Login.vue'
 import ListUserView from '@/views/ListUserView.vue'
 import EditView from '@/views/EditView.vue'
-import ChangePasswordView from '@/components/ChangePasswordView.vue'
+// import ChangePasswordView from '@/components/ChangePasswordView.vue'
 const routes = [
   {
     path: '/',
@@ -90,8 +90,8 @@ const routes = [
   },
   {
     path:'/Info-User/ChangePassword',
-    name:'ChangePassword',
-    component:ChangePasswordView
+    name:'InfoUserView',
+    component:InfoUserView
   },
   {
     path:'/Login',

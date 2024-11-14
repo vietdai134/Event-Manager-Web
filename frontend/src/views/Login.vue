@@ -29,7 +29,9 @@
             />
           </div>
           <button type="submit" class="login-button">Đăng nhập</button>
-          <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+          <!-- <div v-if="errorMessage" class="error" style="margin-top: 20px">
+            {{ errorMessage }}
+          </div> -->
           <div class="step_register">
             <a href="#" class="step_btn" @click.prevent="toggleForm"
               >Register <i class="fa-solid fa-circle-arrow-right"></i
@@ -121,6 +123,7 @@ import Cookies from "js-cookie";
 import { notify } from "@/script/Notification";
 export default {
   name: "LoginForm",
+
   data() {
     return {
       gmail: "",
@@ -163,8 +166,10 @@ export default {
       } catch (error) {
         if (error.response && error.response.status === 404) {
           this.errorMessage = "Thông tin người dùng không chính xác.";
+          notify(this.errorMessage,"warning");
         } else {
           this.errorMessage = "Đã xảy ra lỗi. Vui lòng thử lại.";
+          notify(this.errorMessage,"error");
         }
       }
     },
@@ -179,12 +184,17 @@ export default {
             Cookies.set("fullname", user.FullName, { expires: 15 / (24 * 60) });
             this.saveEmail = user.Gmail;
             this.$emit("user-logged-in", user);
-            this.$router.push({ name: "Home" });
+            if (window.location.href.includes("")) {
+              this.$router.push({ name: "Home" });
+            }
+            localStorage.setItem("updateNotification", "Đăng Nhập Thành Công");
           } else {
             this.errorMessage = "Mật khẩu không chính xác.";
+            notify(this.errorMessage,"warning");
           }
         } else {
           this.errorMessage = "Gmail không tồn tại.";
+          notify(this.errorMessage,"warning");
         }
       }
     },
@@ -202,14 +212,16 @@ export default {
         const response = await add_user(registrationData);
         if (response.data.message === "User added successfully") {
           // this.$router.push({ name: "Login" });
-          notify("Đăng Ký Tài Khoản Thành Công!","success")
+          notify("Đăng Ký Tài Khoản Thành Công!", "success");
           this.showRegister = false;
+        } else if(response.data.message === "Email already exists"){
+          notify("Email đã được đăng ký", "info");
         }else{
-          notify(response.data.message, "info"); 
+          notify(response.data.message, "info");
         }
       } catch (error) {
         console.error("Lỗi khi đăng ký:", error);
-        notify("Đăng ký không thành công. Vui lòng thử lại.", "error"); // Thông báo lỗi
+        notify("Đăng ký không thành công. Vui lòng thử lại.", "error"); 
       }
     },
 

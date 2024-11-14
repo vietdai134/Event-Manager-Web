@@ -33,6 +33,8 @@
             type="datetime-local"
             id="StartTime"
             v-model="event.StartTime"
+            required
+            title="Không được để trống"
           />
         </div>
 
@@ -41,11 +43,10 @@
           <input
             v-model="eventDuration"
             min="1"
-            max="6"
+            max="10"
             type="number"
             required
-            pattern="\d{1,2}"
-            title="thời lượng từ 1 đến 6 giờ"
+            title="Thời lượng từ 1 đến 10 giờ"
           />
         </div>
 
@@ -74,8 +75,8 @@
           <input
             type="number"
             id="MaxAttendees"
-            min="31"
-            max="4000"
+            min="50"
+            max="2000"
             v-model="event.MaxAttendees"
           />
         </div>
@@ -89,6 +90,8 @@
   <script>
 import { getEventById } from "@/api/publicEventsAPI";
 import { editEvent } from "@/api/createdEventsAPI";
+import { notify, confirmNotify } from "@/script/Notification";
+
 export default {
   data() {
     return {
@@ -153,41 +156,49 @@ export default {
   },
   methods: {
     async submitEvent() {
-      try {
-       const enddate = new Date(this.event.StartTime);
-        enddate.setHours(
-          enddate.getHours() + parseInt(this.eventDuration, 10)
-        );
-        const formatDateTime = (date) => {
-          const yyyy = date.getFullYear();
-          const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
-          const dd = String(date.getDate()).padStart(2, "0");
-          const hh = String(date.getHours()).padStart(2, "0");
-          const min = String(date.getMinutes()).padStart(2, "0");
-          return `${yyyy}-${mm}-${dd} ${hh}:${min}:00`;
-        };
-        
-        this.event.EndTime = formatDateTime(enddate);
-        const response = await editEvent(
-          this.eventId,
-          this.event.StartTime,
-          this.event.EndTime,
-          this.event.Location,
-          this.event.Description,
-          this.event.MaxAttendees
-        );
-        console.log(response.data.message);
+      confirmNotify(
+        "Bạn có chắc muốn thay đổi thông tin sự kiện không?",
+        async () => {
+          try {
+            const enddate = new Date(this.event.StartTime);
+            enddate.setHours(
+              enddate.getHours() + parseInt(this.eventDuration, 10)
+            );
+            const formatDateTime = (date) => {
+              const yyyy = date.getFullYear();
+              const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+              const dd = String(date.getDate()).padStart(2, "0");
+              const hh = String(date.getHours()).padStart(2, "0");
+              const min = String(date.getMinutes()).padStart(2, "0");
+              return `${yyyy}-${mm}-${dd} ${hh}:${min}:00`;
+            };
 
-        if (response.data.message === "event updated successfully") {
-          if (window.location.href.includes("editEvent")) {
-            this.$router.push({ name: "DetailEventsCreated" });
+            this.event.EndTime = formatDateTime(enddate);
+            const response = await editEvent(
+              this.eventId,
+              this.event.StartTime,
+              this.event.EndTime,
+              this.event.Location,
+              this.event.Description,
+              this.event.MaxAttendees
+            );
+            // console.log(response.data.message);
+
+            if (response.data.message === "event updated successfully") {
+              if (window.location.href.includes("editEvent")) {
+                this.$router.push({ name: "DetailEventsCreated" });
+              }
+              localStorage.setItem("updateNotification", "Sửa thành công");
+            }
+          } catch (error) {
+            console.error("Error update event:", error);
+            notify("Có lỗi xảy ra khi sửa sự kiện.", "error");
           }
-          localStorage.setItem("updateNotification", "Sửa thành công");
+        },
+        () => {
+          console.log("Người dùng đã hủy thao tác.");
         }
-      } catch (error) {
-        console.error("Error update event:", error);
-        alert("Có lỗi xảy ra khi sửa sự kiện.");
-      }
+      );
     },
   },
 };

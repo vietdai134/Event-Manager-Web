@@ -1,5 +1,5 @@
 .container_create {
-    margin:75px 0 ;
+    margin: 75px 0;
     width: 100%;
     height: auto;
     /* background-color: white; */
@@ -19,10 +19,12 @@
 
 #form_create {
     /* background-color: aqua; */
+    background-color: white;
     width: 50%;
     height: auto;
     box-shadow: 0 0 15px 3px rgb(231, 231, 231);
-    padding: 20px;
+    padding: 30px;
+    border-radius: 10px;
 }
 
 #form_create h1 {
@@ -44,12 +46,25 @@
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 15px 3px rgb(231, 231, 231);
-    margin-right: 10px;
+    margin-right: 5%;
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.notification {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
 
 #form_create .load_img .input_top {
     box-shadow: 0 0 15px 3px rgb(231, 231, 231);
-    width: 50%;
+    width: 45%;
     /* max-width: 500px; */
     padding: 20px 30px;
     border-radius: 10px;
@@ -243,9 +258,9 @@
 .form_group input::placeholder {
     color: #888;
 }
+
 .error-msg {
     color: red;
     font-size: 12px;
     margin-top: 5px;
-  }
-  
+}

@@ -58,68 +58,66 @@ export default {
 
   methods: {
     closeDialog() {
+      this.$router.push({ path: "/Info-User" });
       this.$emit("close");
     },
     async checkPasswords() {
       this.gmail = Cookies.get("email");
 
-      if (!this.oldPassword) {
+      // Loại bỏ khoảng trắng thừa ở đầu và cuối mật khẩu
+      const trimmedOldPassword = this.oldPassword.trim();
+      const trimmedNewPassword = this.password.trim();
+      const trimmedConfirmPassword = this.confirmPassword.trim();
+
+      if (!trimmedOldPassword) {
         notify("Vui lòng nhập mật khẩu cũ!", "warning");
-        console.error("Vui lòng nhập mật khẩu cũ!");
         return;
       }
 
-      if (this.password !== this.confirmPassword) {
+      if (trimmedNewPassword !== trimmedConfirmPassword) {
         notify("Mật khẩu mới và xác nhận mật khẩu không khớp!", "warning");
-        console.error("Mật khẩu mới và xác nhận mật khẩu không khớp!");
         return;
       }
-      confirmNotify(
-        "Bạn có chắc muốn đổi mật khẩu không?",
-        async () => {
-          try {
-            const response = await check_oldPassword(this.gmail);
-            this.verifypass = response.data.Password;
 
-            if (this.oldPassword !== this.verifypass) {
-              notify("Mật khẩu cũ không khớp!", "warning");
-              console.error("Mật khẩu cũ không khớp!");
-              return;
-            }
+      if (trimmedOldPassword === trimmedNewPassword) {
+        notify("Mật khẩu cũ và mật khẩu mới không được giống nhau!", "warning");
+        return;
+      }
 
-            console.log("Mật khẩu cũ khớp!");
+      confirmNotify("Bạn có chắc muốn đổi mật khẩu không?", async () => {
+        try {
+          const response = await check_oldPassword(this.gmail);
+          this.verifypass = response.data.Password;
+          // console.log(trimmedOldPassword)
+          if (trimmedOldPassword !== this.verifypass.trim()) {
+            notify("Mật khẩu cũ không khớp!", "warning");
+            return;
+          }
 
-            const updateResponse = await userChangePassword(
-              this.password,
-              this.gmail
+          const updateResponse = await userChangePassword(
+            trimmedNewPassword,
+            this.gmail
+          );
+
+          if (updateResponse.data.message === "password updated successfully") {
+            localStorage.setItem(
+              "updateNotification",
+              "Đổi mật khẩu thành công"
             );
 
-            if (
-              updateResponse.data.message === "password updated successfully"
-            ) {
-              console.log("Đổi mật khẩu thành công!");
-              localStorage.setItem(
-                "updateNotification",
-                "Đổi mật khẩu thành công"
-              );
-
-              if (window.location.href.includes("ChangePassword")) {
-                this.$router.push({ name: "InfoUser" });
-              }
-            } else {
-              notify("Có lỗi xảy ra khi đổi mật khẩu.", "error");
-              console.error("Có lỗi xảy ra khi đổi mật khẩu.");
+            if (window.location.href.includes("ChangePassword")) {
+              this.$router.push({ name: "InfoUser" });
+              this.closeDialog();
+              window.location.reload();
             }
-          } catch (error) {
-            console.error("Có lỗi xảy ra:", error);
-            notify("Có lỗi xảy ra catch.", "error");
+          } else {
+            notify("Có lỗi xảy ra khi đổi mật khẩu.", "error");
           }
-        },
-        () => {
-          // Hủy thao tác khi người dùng nhấn nút "Hủy"
-          console.log("Người dùng đã hủy thao tác.");
+        } catch (error) {
+          console.error("Có lỗi xảy ra:", error);
+          notify("Có lỗi xảy ra catch.", "error");
         }
-      );
+      });
     },
   },
 };
